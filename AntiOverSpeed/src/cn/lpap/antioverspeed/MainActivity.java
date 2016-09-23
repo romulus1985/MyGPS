@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
-import com.my.gps.R;
+import cn.lpap.antioverspeed.R;
 
 import android.app.Activity;
 import android.content.Context;
