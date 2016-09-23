@@ -21,6 +21,14 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="40dp"
 	        android:text="@string/add_favorite"
+	        android:visibility="gone"
+	        />
+	    <Button
+	        android:id="@+id/query_positions"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="40dp"
+	        android:text="@string/query_positions"
 	        />
     </LinearLayout>
     <TextView android:layout_width="fill_parent"

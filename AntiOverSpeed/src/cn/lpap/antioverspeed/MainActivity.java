@@ -1,7 +1,5 @@
 package cn.lpap.antioverspeed;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,24 +17,26 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
-	private TextView mTitle = null;
+	
+	private GpsDatabaseHelper mDb = null;
 	private TextView mSpeed = null;
 	private TextView mPostion = null;
     private EditText mOtherInfo = null;
+    private Button mQueryPositions = null;
 	
 	private LocationManager mLm = null;
 	
@@ -47,7 +47,11 @@ public class MainActivity extends Activity {
          * 位置信息变化时触发 
          */  
         public void onLocationChanged(Location location) {  
-            updateView(location);  
+            updateView(location);
+            mDb.insert(String.valueOf(Calendar.getInstance().getTimeInMillis()), 
+            		String.valueOf(location.getSpeed()), 
+            		String.valueOf(location.getLongitude()),
+            		String.valueOf(location.getLatitude()));
             Log.i(TAG, "时间：" + location.getTime());  
             Log.i(TAG, "经度：" + location.getLongitude());  
             Log.i(TAG, "纬度：" + location.getLatitude());  
@@ -137,6 +141,8 @@ public class MainActivity extends Activity {
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
+		mDb = new GpsDatabaseHelper(this);
+		
 		initView();
 		
 		mLm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -169,10 +175,20 @@ public class MainActivity extends Activity {
 	}
 	
 	private void initView() {
-		mTitle = (TextView) findViewById(R.id.title);
 		mSpeed = (TextView)findViewById(R.id.speed);
 		mPostion = (TextView)findViewById(R.id.position);
 		mOtherInfo = (EditText) findViewById(R.id.other_info);
+		
+		mQueryPositions = (Button)findViewById(R.id.query_positions);
+		mQueryPositions.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent positionsList = new Intent(MainActivity.this, PositionsList.class);
+				startActivity(positionsList);
+			}
+		});
 	}
 	
 	/** 
@@ -236,16 +252,11 @@ public class MainActivity extends Activity {
     }
     
     private String getSpeed(final Location location) {
-    	final float rate = 3.6f;
     	float speed = 0;
     	if(null != location) {
-    		final float speedOrig = location.getSpeed() * rate;
-
-    		BigDecimal   b   =   new   BigDecimal(speedOrig);
-    		speed  =  b.setScale(2,   RoundingMode.HALF_UP).floatValue();
-    		//speed = speedOrig;
+    		speed = Utils.getSpeed(location.getSpeed());
     	}
-    	return String.valueOf(speed) + "千米/小时";
+    	return String.valueOf(speed) + "千米/时";
     }
     
     private String getTime(final Location location) {
