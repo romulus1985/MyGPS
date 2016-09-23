@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView android:layout_width="fill_parent"
+        android:id="@+id/title"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        />
+    <TextView android:layout_width="fill_parent"
+        android:id="@+id/speed"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        />
+    <TextView android:layout_width="fill_parent"
+        android:id="@+id/position"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        />
+    <EditText
+        android:id="@+id/other_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:textSize="20sp"
+        android:editable="false"
+        />
+</LinearLayout>
