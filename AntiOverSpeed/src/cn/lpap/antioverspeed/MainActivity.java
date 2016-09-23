@@ -1,5 +1,7 @@
 package cn.lpap.antioverspeed;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -238,7 +240,11 @@ public class MainActivity extends Activity {
     	final float rate = 3.6f;
     	float speed = 0;
     	if(null != location) {
-    		speed = location.getSpeed() * rate;
+    		final float speedOrig = location.getSpeed() * rate;
+
+    		BigDecimal   b   =   new   BigDecimal(speedOrig);
+    		speed  =  b.setScale(2,   RoundingMode.HALF_UP).floatValue();
+    		//speed = speedOrig;
     	}
     	return String.valueOf(speed) + "千米/小时";
     }
