@@ -1,5 +1,7 @@
 <resources>
 
     <string name="app_name">AntiOverSpeed</string>
-
+    
+	<string name="title">设备信息</string>
+	<string name="add_favorite">收藏当前位置</string>
 </resources>

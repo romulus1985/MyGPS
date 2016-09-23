@@ -211,8 +211,7 @@ public class MainActivity extends Activity {
      * @param location 
      */  
     private void updateView(Location location) {  
-        if (location != null) {  
-        	mTitle.setText("设备信息");
+        if (location != null) {
             mSpeed.setText("速度：\n" + getSpeed(location));
             mPostion.setText("位置：" + getPosition(location));
             
