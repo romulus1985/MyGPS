@@ -30,6 +30,13 @@
 	        android:layout_marginLeft="40dp"
 	        android:text="@string/query_positions"
 	        />
+	    <Button
+	        android:id="@+id/select_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="40dp"
+	        android:text="@string/start_time"
+	        />
     </LinearLayout>
     <TextView android:layout_width="fill_parent"
         android:id="@+id/speed"

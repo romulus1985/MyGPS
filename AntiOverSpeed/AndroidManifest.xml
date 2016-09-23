@@ -24,6 +24,8 @@
 		</activity>
         <activity android:name=".PositionsList">
 		</activity>
+        <activity android:name=".TimeSelect">
+		</activity>
     </application>
 
 </manifest>

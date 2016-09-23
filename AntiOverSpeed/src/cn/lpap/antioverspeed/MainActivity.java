@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
 	private TextView mPostion = null;
     private EditText mOtherInfo = null;
     private Button mQueryPositions = null;
+    private Button mSelectTime = null;
 	
 	private LocationManager mLm = null;
 	
@@ -187,6 +188,17 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent positionsList = new Intent(MainActivity.this, PositionsList.class);
 				startActivity(positionsList);
+			}
+		});
+		
+		mSelectTime = (Button)findViewById(R.id.select_time);
+		mSelectTime.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent selectTime = new Intent(MainActivity.this, TimeSelect.class);
+				startActivity(selectTime);
 			}
 		});
 	}
