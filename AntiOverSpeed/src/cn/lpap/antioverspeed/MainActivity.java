@@ -240,7 +240,7 @@ public class MainActivity extends Activity {
      */  
     private void updateView(Location location) {  
         if (location != null) {
-            mSpeed.setText("速度：\n" + getSpeed(location));
+            mSpeed.setText(getSpeed(location));
             mPostion.setText("位置：" + getPosition(location));
             
             mOtherInfo.setText("经度：");

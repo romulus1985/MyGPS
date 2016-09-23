@@ -38,10 +38,18 @@
 	        android:text="@string/start_time"
 	        />
     </LinearLayout>
-    <TextView android:layout_width="fill_parent"
-        android:id="@+id/speed"
+    <TextView 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
+        android:text="@string/speed_title"
+        android:textSize="30sp"
+        />
+    <TextView 
+        android:id="@+id/speed"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:textStyle="bold"
         />
     <TextView
         android:id="@+id/position"

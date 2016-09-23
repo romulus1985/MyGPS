@@ -6,4 +6,5 @@
 	<string name="add_favorite">收藏当前位置</string>
 	<string name="query_positions">查询存储位置</string>
 	<string name="start_time">选择时间</string>
+	<string name="speed_title">速度:</string>
 </resources>
