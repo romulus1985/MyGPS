@@ -38,8 +38,8 @@ public class PositionsList extends ListActivity {
             HashMap<String, Object> map = new HashMap<String, Object>();
             if(i < size) {
 	            pos = postions.get(i);
-	            map.put(KEY_TIME, "时间： " + getTime(pos.time));
-	            map.put(KEY_SPEED, "速度: " + getSpeed(pos.speed) + "千米/时");  
+	            map.put(KEY_TIME, getString(R.string.time_title) + getTime(pos.time));
+	            map.put(KEY_SPEED, getString(R.string.speed_title) + getSpeed(pos.speed) + getString(R.string.speed_km_unit));  
 	            listItems.add(map);   
             }
         }   
