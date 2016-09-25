@@ -7,4 +7,10 @@
 	<string name="query_positions">查询存储位置</string>
 	<string name="start_time">选择时间</string>
 	<string name="speed_title">速度:</string>
+	<string name="speed_km_unit">千米/时</string>
+	<string name="position_title">位置：</string>
+	<string name="blank">空</string>
+	<string name="long_title">经度：</string>
+	<string name="lan_title">纬度：</string>
+	<string name="time_title">时间：</string>
 </resources>

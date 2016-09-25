@@ -241,14 +241,14 @@ public class MainActivity extends Activity {
     private void updateView(Location location) {  
         if (location != null) {
             mSpeed.setText(getSpeed(location));
-            mPostion.setText("位置：" + getPosition(location));
+            mPostion.setText(getString(R.string.position_title) + getPosition(location));
             
-            mOtherInfo.setText("经度：");
+            mOtherInfo.setText(getString(R.string.long_title));
             mOtherInfo.append(String.valueOf(location.getLongitude()) + "\n");  
-            mOtherInfo.append("纬度：");  
+            mOtherInfo.append(getString(R.string.lan_title));  
             mOtherInfo.append(String.valueOf(location.getLatitude()) + "\n");  
             
-            mOtherInfo.append("时间：");
+            mOtherInfo.append(getString(R.string.time_title));
             mOtherInfo.append(getTime(location) + "\n");
         } else {  
             // 清空EditText对象  
@@ -257,7 +257,7 @@ public class MainActivity extends Activity {
     }  
     
     private String getPosition(final Location location) {
-    	String position = "空";
+    	String position = getString(R.string.blank);
     	if(null != location) {
     	}
     	return position;
@@ -268,7 +268,7 @@ public class MainActivity extends Activity {
     	if(null != location) {
     		speed = Utils.getSpeed(location.getSpeed());
     	}
-    	return String.valueOf(speed) + "千米/时";
+    	return String.valueOf(speed) + getString(R.string.speed_km_unit);
     }
     
     private String getTime(final Location location) {
