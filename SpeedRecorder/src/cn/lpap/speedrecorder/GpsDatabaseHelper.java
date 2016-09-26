@@ -1,4 +1,4 @@
-package cn.lpap.antioverspeed;
+package cn.lpap.speedrecorder;
 
 import java.util.ArrayList;
 import java.util.List;

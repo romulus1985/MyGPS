@@ -1,9 +1,11 @@
-package cn.lpap.antioverspeed;
+package cn.lpap.speedrecorder;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import cn.lpap.antioverspeed.R;
 
 import android.app.ListActivity;
 import android.os.Bundle;

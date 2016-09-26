@@ -16,17 +16,17 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" android:label="@string/app_name">
+        <activity android:name="cn.lpap.speedrecorder.MainActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" /> 
 			<category android:name="android.intent.category.LAUNCHER" /> 
 			 </intent-filter>
 		</activity>
-        <activity android:name=".AppInfo">
+        <activity android:name="cn.lpap.speedrecorder.AppInfo">
 		</activity>
-        <activity android:name=".PositionsList">
+        <activity android:name="cn.lpap.speedrecorder.PositionsList">
 		</activity>
-        <activity android:name=".TimeSelect">
+        <activity android:name="cn.lpap.speedrecorder.TimeSelect">
 		</activity>
     </application>
 

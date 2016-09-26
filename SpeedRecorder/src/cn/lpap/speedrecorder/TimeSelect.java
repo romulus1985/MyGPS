@@ -1,7 +1,9 @@
-package cn.lpap.antioverspeed;
+package cn.lpap.speedrecorder;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import cn.lpap.antioverspeed.R;
 
 import android.app.Activity;
 import android.os.Bundle;
