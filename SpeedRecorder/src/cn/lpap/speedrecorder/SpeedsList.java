@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class PositionsList extends BaseActivity {
+public class SpeedsList extends BaseActivity {
 	private ListView mSpeedList = null;
 	
 	private static final String KEY_TIME = "time";
@@ -115,7 +115,7 @@ public class PositionsList extends BaseActivity {
 			HashMap<String, String> map = listItems.get(arg0);
 			if(null != map) {
 				final String time = map.get(KEY_TIME);
-				wrapper.time.setText(time);
+				wrapper.time.setText((arg0 + 1) + ".  " +time);
 				final String speed = map.get(KEY_SPEED);
 				wrapper.speed.setText(speed);
 			}

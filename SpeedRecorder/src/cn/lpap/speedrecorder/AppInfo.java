@@ -34,7 +34,7 @@ public class AppInfo extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent positionsList = new Intent(AppInfo.this, PositionsList.class);
+				Intent positionsList = new Intent(AppInfo.this, SpeedsList.class);
 				startActivity(positionsList);
 			}
 		});

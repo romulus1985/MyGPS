@@ -24,7 +24,7 @@
 		</activity>
         <activity android:name=".AppInfo">
 		</activity>
-        <activity android:name=".PositionsList">
+        <activity android:name=".SpeedsList">
 		</activity>
         <activity android:name=".TimeSelect">
 		</activity>
