@@ -35,9 +35,10 @@ public class MainActivity extends BaseActivity {
 	
 	private GpsDatabaseHelper mDb = null;
 	private Button mAppInfo = null;
-	private TextView mSpeed = null;
+	private TextView mSpeedTv = null;
 	private TextView mPostion = null;
     private EditText mOtherInfo = null;
+    private float mSpeed = 0;
     
     private boolean mResumed = false;
 	
@@ -50,7 +51,11 @@ public class MainActivity extends BaseActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case MSG_RESET:
-				showToast(getString(R.string.location_change_error));
+				if(mSpeed > 0) {
+					mSpeed = 0;
+					showToast(getString(R.string.location_change_error, mSpeed));
+					mSpeedTv.setText("0" + getString(R.string.speed_km_unit));
+				}
 				//updateView(null);
 				break;
 
@@ -68,6 +73,9 @@ public class MainActivity extends BaseActivity {
          */  
         public void onLocationChanged(Location location) {  
             updateView(location);
+            if(null != location) {
+            	mSpeed = location.getSpeed();
+            }
             
             mUI.removeMessages(MSG_RESET);
             mUI.sendEmptyMessageDelayed(MSG_RESET, DELAY_RESET);
@@ -212,7 +220,7 @@ public class MainActivity extends BaseActivity {
 	}
 	
 	private void initView() {
-		mSpeed = (TextView)findViewById(R.id.speed);
+		mSpeedTv = (TextView)findViewById(R.id.speed);
 		mPostion = (TextView)findViewById(R.id.position);
 		mOtherInfo = (EditText) findViewById(R.id.other_info);
 		mAppInfo = (Button)findViewById(R.id.app_info);
@@ -263,7 +271,7 @@ public class MainActivity extends BaseActivity {
      * @param location 
      */  
     private void updateView(Location location) {  
-        mSpeed.setText(getSpeed(location));
+        mSpeedTv.setText(getSpeed(location));
         mPostion.setText(getString(R.string.position_title) + getPosition(location));
         if (location != null) {
             mOtherInfo.setText(getString(R.string.long_title));
