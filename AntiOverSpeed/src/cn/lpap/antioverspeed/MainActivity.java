@@ -33,11 +33,10 @@ public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
 	
 	private GpsDatabaseHelper mDb = null;
+	private Button mAppInfo = null;
 	private TextView mSpeed = null;
 	private TextView mPostion = null;
     private EditText mOtherInfo = null;
-    private Button mQueryPositions = null;
-    private Button mSelectTime = null;
 	
 	private LocationManager mLm = null;
 	
@@ -179,26 +178,14 @@ public class MainActivity extends Activity {
 		mSpeed = (TextView)findViewById(R.id.speed);
 		mPostion = (TextView)findViewById(R.id.position);
 		mOtherInfo = (EditText) findViewById(R.id.other_info);
-		
-		mQueryPositions = (Button)findViewById(R.id.query_positions);
-		mQueryPositions.setOnClickListener(new OnClickListener() {
+		mAppInfo = (Button)findViewById(R.id.app_info);
+		mAppInfo.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent positionsList = new Intent(MainActivity.this, PositionsList.class);
-				startActivity(positionsList);
-			}
-		});
-		
-		mSelectTime = (Button)findViewById(R.id.select_time);
-		mSelectTime.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent selectTime = new Intent(MainActivity.this, TimeSelect.class);
-				startActivity(selectTime);
+				Intent appInfo = new Intent(MainActivity.this, AppInfo.class);
+				startActivity(appInfo);
 			}
 		});
 	}

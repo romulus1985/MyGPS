@@ -24,18 +24,11 @@
 	        android:visibility="gone"
 	        />
 	    <Button
-	        android:id="@+id/query_positions"
+	        android:id="@+id/app_info"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="40dp"
-	        android:text="@string/query_positions"
-	        />
-	    <Button
-	        android:id="@+id/select_time"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="40dp"
-	        android:text="@string/start_time"
+	        android:text="@string/app_info"
 	        />
     </LinearLayout>
     <TextView 

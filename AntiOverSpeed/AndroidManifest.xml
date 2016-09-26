@@ -22,6 +22,8 @@
 			<category android:name="android.intent.category.LAUNCHER" /> 
 			 </intent-filter>
 		</activity>
+        <activity android:name=".AppInfo">
+		</activity>
         <activity android:name=".PositionsList">
 		</activity>
         <activity android:name=".TimeSelect">
