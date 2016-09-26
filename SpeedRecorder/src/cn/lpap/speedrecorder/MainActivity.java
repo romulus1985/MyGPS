@@ -50,7 +50,8 @@ public class MainActivity extends BaseActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case MSG_RESET:
-				updateView(null);
+				showToast(getString(R.string.location_change_error));
+				//updateView(null);
 				break;
 
 			default:
@@ -68,8 +69,8 @@ public class MainActivity extends BaseActivity {
         public void onLocationChanged(Location location) {  
             updateView(location);
             
-            //mUI.removeMessages(MSG_RESET);
-            //mUI.sendEmptyMessageDelayed(MSG_RESET, DELAY_RESET);
+            mUI.removeMessages(MSG_RESET);
+            mUI.sendEmptyMessageDelayed(MSG_RESET, DELAY_RESET);
             
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");

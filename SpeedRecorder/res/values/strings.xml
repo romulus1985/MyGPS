@@ -6,6 +6,7 @@
 	<string name="add_favorite">收藏当前位置</string>
 	<string name="app_info">详细信息</string>
 	<string name="query_speeds">查询最新速度记录</string>
+	<string name="location_change_error">再次获取GPS信息超时</string>
 	<string name="start_time">选择时间</string>
 	<string name="speed_title">速度:</string>
 	<string name="speed_km_unit">千米/时</string>
