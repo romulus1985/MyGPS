@@ -15,7 +15,11 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     private static final int version = 1; //数据库版本  
     private static final String TABLE_NAME = "position";
     private static final String POS_TIME = "time";
+    private static final String POS_TIME_DESC = "timeDesc";
     private static final String POS_SPEED = "speed";
+    private static final String POS_SPEED_DESC = "speedDesc";
+    private static final String POS_LONG = "longitude";
+    private static final String POS_LAN = "latitude";
 
 	public GpsDatabaseHelper(Context context) {  
 		  
@@ -32,7 +36,11 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
           db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + 
         		  " (positionid integer primary key autoincrement, "
         		  + POS_TIME + " varchar(20), "
-        		  + POS_SPEED + " varchar(20), longitude varchar(20), latitude varchar(20))");     
+        		  + POS_TIME_DESC + " varchar(30), "
+        		  + POS_SPEED + " varchar(20), "
+        		  + POS_SPEED_DESC + " varchar(20), "
+        		  + POS_LONG+ " varchar(20), " 
+        		  + POS_LAN + " varchar(20))");     
 
      }  
 
@@ -74,15 +82,19 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     }
     
     public void insert(final String time, 
+    		final String timeDesc,
     		final String speed, 
+    		final String speedDesc,
     		final String longitude, 
     		final String latitude) {  
         ContentValues cv=new ContentValues();  
                       
-        cv.put("time", time);  
-        cv.put("speed", speed);  
-        cv.put("longitude", longitude);  
-        cv.put("latitude", latitude);
+        cv.put(POS_TIME, time);  
+        cv.put(POS_TIME_DESC, timeDesc);
+        cv.put(POS_SPEED, speed);  
+        cv.put(POS_SPEED_DESC, speedDesc);
+        cv.put(POS_LONG, longitude);  
+        cv.put(POS_LAN, latitude);
           
         getWritableDatabase().insert(TABLE_NAME, null, cv);  
     } 

@@ -1,5 +1,6 @@
 package cn.lpap.antioverspeed;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -48,8 +49,15 @@ public class MainActivity extends Activity {
          */  
         public void onLocationChanged(Location location) {  
             updateView(location);
-            mDb.insert(String.valueOf(Calendar.getInstance().getTimeInMillis()), 
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+    		String dateDesc = sdf.format(cal.getTime());
+    		final float speed = location.getSpeed();
+    		final float speedManual = Utils.getSpeed(speed);
+            mDb.insert(String.valueOf(cal.getTimeInMillis()), 
+            		dateDesc,
             		String.valueOf(location.getSpeed()), 
+            		String.valueOf(speedManual),
             		String.valueOf(location.getLongitude()),
             		String.valueOf(location.getLatitude()));
             Log.i(TAG, "时间：" + location.getTime());  
