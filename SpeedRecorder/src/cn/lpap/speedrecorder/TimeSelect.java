@@ -3,9 +3,8 @@ package cn.lpap.speedrecorder;
 import java.util.Calendar;
 import java.util.Date;
 
-import cn.lpap.antioverspeed.R;
+import cn.lpap.speedrecorder.R;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
@@ -14,7 +13,7 @@ import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
 
-public class TimeSelect extends Activity {
+public class TimeSelect extends BaseActivity {
     private EditText dateEt = null;
     private EditText timeEt = null;
     private EditText endTimeEt = null;

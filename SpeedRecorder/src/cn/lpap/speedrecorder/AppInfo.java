@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import cn.lpap.antioverspeed.R;
+import cn.lpap.speedrecorder.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,8 +17,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class AppInfo extends Activity {
-    private Button mQueryPositions = null;
+public class AppInfo extends BaseActivity {
+    private Button mQuerySpeeds = null;
     private Button mSelectTime = null;
     private Button mExportDB = null;
 	
@@ -29,8 +28,8 @@ public class AppInfo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_info);
 		
-		mQueryPositions = (Button)findViewById(R.id.query_positions);
-		mQueryPositions.setOnClickListener(new OnClickListener() {
+		mQuerySpeeds = (Button)findViewById(R.id.query_speeds);
+		mQuerySpeeds.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {

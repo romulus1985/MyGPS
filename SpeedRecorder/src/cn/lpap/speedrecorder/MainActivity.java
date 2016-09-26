@@ -5,9 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
-import cn.lpap.antioverspeed.R;
+import cn.lpap.speedrecorder.R;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -24,14 +23,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 	private static final String TAG = "MainActivity";
 	private static final long MIN_TIME = 1000;
 	
@@ -176,8 +174,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.main);
-		
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		mDb = new GpsDatabaseHelper(this);
 		
