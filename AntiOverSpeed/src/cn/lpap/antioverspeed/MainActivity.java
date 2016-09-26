@@ -18,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
+	private static final long MIN_TIME = 1000;
 	
 	private GpsDatabaseHelper mDb = null;
 	private Button mAppInfo = null;
@@ -41,6 +43,22 @@ public class MainActivity extends Activity {
 	
 	private LocationManager mLm = null;
 	
+	private static final int MSG_RESET = 0;
+	
+	private static final long DELAY_RESET = 2 * MIN_TIME;
+	private Handler mUI = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case MSG_RESET:
+				updateView(null);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	
 	// 位置监听  
     private LocationListener mLocationListener = new LocationListener() {  
   
@@ -49,6 +67,10 @@ public class MainActivity extends Activity {
          */  
         public void onLocationChanged(Location location) {  
             updateView(location);
+            
+            //mUI.removeMessages(MSG_RESET);
+            //mUI.sendEmptyMessageDelayed(MSG_RESET, DELAY_RESET);
+            
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
     		String dateDesc = sdf.format(cal.getTime());
@@ -73,15 +95,18 @@ public class MainActivity extends Activity {
             switch (status) {  
             // GPS状态为可见时  
             case LocationProvider.AVAILABLE:  
-                Log.i(TAG, "当前GPS状态为可见状态");  
+                Log.i(TAG, "当前GPS状态为可见状态"); 
+                showToast("当前GPS状态为可见状态");
                 break;  
             // GPS状态为服务区外时  
             case LocationProvider.OUT_OF_SERVICE:  
-                Log.i(TAG, "当前GPS状态为服务区外状态");  
+                Log.i(TAG, "当前GPS状态为服务区外状态"); 
+                showToast("当前GPS状态为服务区外状态"); 
                 break;  
             // GPS状态为暂停服务时  
             case LocationProvider.TEMPORARILY_UNAVAILABLE:  
-                Log.i(TAG, "当前GPS状态为暂停服务状态");  
+                Log.i(TAG, "当前GPS状态为暂停服务状态");   
+                showToast("当前GPS状态为暂停服务状态"); 
                 break;  
             }  
         }  
@@ -109,11 +134,13 @@ public class MainActivity extends Activity {
             switch (event) {  
             // 第一次定位  
             case GpsStatus.GPS_EVENT_FIRST_FIX:  
-                Log.i(TAG, "第一次定位");  
+                Log.i(TAG, "第一次定位");   
+                showToast("第一次定位"); 
                 break;  
             // 卫星状态改变  
-            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:  
+            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
                 Log.i(TAG, "卫星状态改变");  
+                //showToast("卫星状态改变"); 
                 // 获取当前状态  
                 GpsStatus gpsStatus = mLm.getGpsStatus(null);  
                 // 获取卫星颗数的默认最大值  
@@ -126,15 +153,18 @@ public class MainActivity extends Activity {
                     GpsSatellite s = iters.next();  
                     count++;  
                 }  
-                System.out.println("搜索到：" + count + "颗卫星");  
+                System.out.println("搜索到：" + count + "颗卫星");   
+                //showToast("搜索到：" + count + "颗卫星"); 
                 break;  
             // 定位启动  
-            case GpsStatus.GPS_EVENT_STARTED:  
+            case GpsStatus.GPS_EVENT_STARTED:
                 Log.i(TAG, "定位启动");  
+                showToast("定位启动"); 
                 break;  
             // 定位结束  
             case GpsStatus.GPS_EVENT_STOPPED:  
                 Log.i(TAG, "定位结束");  
+                showToast("定位结束"); 
                 break;  
             }  
         };  
@@ -178,7 +208,7 @@ public class MainActivity extends Activity {
   
         // 1秒更新一次，或最小位移变化超过1米更新一次；  
         // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置  
-        mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, mLocationListener);
+        mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
         //lm.requestLocationUpdates(bestProvider, 1000, 1, locationListener);
 	}
 	
@@ -234,10 +264,9 @@ public class MainActivity extends Activity {
      * @param location 
      */  
     private void updateView(Location location) {  
+        mSpeed.setText(getSpeed(location));
+        mPostion.setText(getString(R.string.position_title) + getPosition(location));
         if (location != null) {
-            mSpeed.setText(getSpeed(location));
-            mPostion.setText(getString(R.string.position_title) + getPosition(location));
-            
             mOtherInfo.setText(getString(R.string.long_title));
             mOtherInfo.append(String.valueOf(location.getLongitude()) + "\n");  
             mOtherInfo.append(getString(R.string.lan_title));  
@@ -301,6 +330,10 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		mLm.removeUpdates(mLocationListener);  
+	}
+	
+	private void showToast(final String msg) {
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 	
 	private void log(String msg) {
