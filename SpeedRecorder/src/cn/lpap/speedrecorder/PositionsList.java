@@ -52,8 +52,10 @@ public class PositionsList extends BaseActivity {
             HashMap<String, String> map = new HashMap<String, String>();
             if(i < size) {
 	            pos = postions.get(i);
-	            map.put(KEY_TIME, getString(R.string.time_title) + getTime(pos.time));
-	            map.put(KEY_SPEED, getString(R.string.speed_title) + getSpeed(pos.speed) + getString(R.string.speed_km_unit));  
+	            /*map.put(KEY_TIME, getString(R.string.time_title) + getTime(pos.time));
+	            map.put(KEY_SPEED, getString(R.string.speed_title) + getSpeed(pos.speed) + getString(R.string.speed_km_unit));*/
+	            map.put(KEY_TIME, getTime(pos.time));
+	            map.put(KEY_SPEED, getSpeed(pos.speed) + getString(R.string.speed_km_unit));
 	            listItems.add(map);   
             }
         }   

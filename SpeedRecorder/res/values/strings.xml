@@ -16,4 +16,6 @@
 	<string name="time_title">时间：</string>
 	<string name="export_db">导出数据库文件</string>
 	<string name="export_db_ok">导出数据库文件成功</string>
+	<string name="header_time">时间</string>
+	<string name="header_speed">速度</string>
 </resources>
