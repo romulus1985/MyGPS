@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity {
 	private TextView mSpeed = null;
 	private TextView mPostion = null;
     private EditText mOtherInfo = null;
+    
+    private boolean mResumed = false;
 	
 	private LocationManager mLm = null;
 	
@@ -319,6 +321,14 @@ public class MainActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		mResumed = true;
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mResumed = false;
 	}
 	
 	@Override
@@ -329,7 +339,9 @@ public class MainActivity extends BaseActivity {
 	}
 	
 	private void showToast(final String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+		if(mResumed) {
+			Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	private void log(String msg) {
