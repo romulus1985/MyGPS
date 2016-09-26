@@ -14,4 +14,6 @@
 	<string name="long_title">经度：</string>
 	<string name="lan_title">纬度：</string>
 	<string name="time_title">时间：</string>
+	<string name="export_db">导出数据库文件</string>
+	<string name="export_db_ok">导出数据库文件成功</string>
 </resources>

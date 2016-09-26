@@ -17,4 +17,11 @@
         android:layout_marginLeft="40dp"
         android:text="@string/start_time"
         />
+    <Button
+        android:id="@+id/export_db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="@string/export_db"
+        />
 </LinearLayout>
