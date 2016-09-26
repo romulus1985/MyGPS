@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -79,6 +81,24 @@ public class GpsService extends Service {
         // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置  
         mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
         //lm.requestLocationUpdates(bestProvider, 1000, 1, locationListener);
+	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		 Notification notification = new Notification(R.drawable.ic_launcher,
+				 getString(R.string.app_name), System.currentTimeMillis());
+		
+		 PendingIntent pendingintent = PendingIntent.getActivity(this, 
+				 0,
+				 new Intent(this, MainActivity.class), 
+				 0);
+		 notification.setLatestEventInfo(this, 
+				 "GpsService", 
+				 "请保持程序在后台运行",
+				 pendingintent);
+		 startForeground(0x111, notification);
+		 return super.onStartCommand(intent, flags, startId);
 	}
 	
 	public void reqLastKnownLocation(){
@@ -270,5 +290,6 @@ public class GpsService extends Service {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		mLm.removeUpdates(mLocationListener); 
+		stopForeground(true);
 	}
 }
