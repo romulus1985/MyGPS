@@ -140,11 +140,10 @@ public class SpeedsList extends BaseActivity {
     	return timeOut;
     }
     
-    private String getSpeed(final String speedIn) {
+    private String getSpeed(final float speedIn) {
     	float speedOut = 0;
     	try {
-	    	float speed = Float.valueOf(speedIn);
-	    	speedOut = Utils.getSpeed(speed);
+	    	speedOut = Utils.getSpeed(speedIn);
     	} catch (NumberFormatException e) {
     		e.printStackTrace();
     	}

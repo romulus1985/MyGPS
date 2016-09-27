@@ -37,7 +37,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
         		  " (positionid integer primary key autoincrement, "
         		  + POS_TIME + " INT, "
         		  + POS_TIME_DESC + " varchar(30), "
-        		  + POS_SPEED + " varchar(20), "
+        		  + POS_SPEED + " REAL, "
         		  + POS_SPEED_DESC + " varchar(20), "
         		  + POS_LONG+ " varchar(20), " 
         		  + POS_LAN + " varchar(20))");     
@@ -51,7 +51,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     
     public class Position {
     	long time;
-    	String speed;
+    	float speed;
     }
     public List<Position> queryLastest(final int maxCount) {
     	Cursor c = null; 
@@ -66,7 +66,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
 	        	do{
 	        		Position pos = new Position();
 	        		pos.time = c.getLong(timeIndex);
-	        		pos.speed = c.getString(speedIndex);
+	        		pos.speed = c.getFloat(speedIndex);
 	        		positions.add(pos);
 	        		c.moveToPrevious();
 	        		i++;
@@ -100,7 +100,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
 	        	while(!c.isAfterLast()){
 	        		Position pos = new Position();
 	        		pos.time = c.getLong(timeIndex);
-	        		pos.speed = c.getString(speedIndex);
+	        		pos.speed = c.getFloat(speedIndex);
 	        		positions.add(pos);
 	        		c.moveToNext();
 	        	}
@@ -115,7 +115,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     
     public void insert(final long time, 
     		final String timeDesc,
-    		final String speed, 
+    		final float speed, 
     		final String speedDesc,
     		final String longitude, 
     		final String latitude) {  

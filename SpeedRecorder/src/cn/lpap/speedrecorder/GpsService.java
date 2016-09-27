@@ -185,7 +185,7 @@ public class GpsService extends Service {
     		final float speedManual = Utils.getSpeed(speed);
             mDb.insert(cal.getTimeInMillis(), 
             		dateDesc,
-            		String.valueOf(location.getSpeed()), 
+            		location.getSpeed(), 
             		String.valueOf(speedManual),
             		String.valueOf(location.getLongitude()),
             		String.valueOf(location.getLatitude()));
