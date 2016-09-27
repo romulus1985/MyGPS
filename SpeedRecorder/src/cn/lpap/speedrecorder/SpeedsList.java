@@ -13,9 +13,11 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,14 +27,19 @@ public class SpeedsList extends BaseActivity {
 	private ListView mSpeedList = null;
 	public static final String KEY_START_TIME = "key_start_time";
 	public static final String KEY_END_TIME = "key_end_time";
+	private Button mSpeedBtn = null;
+	private Button mTimeBtn = null;
+	private long mStartTime = 0;
+	private long mEndTime = 0;
 	
 	private static final String KEY_TIME = "time";
 	private static final String KEY_SPEED = "speed";
-	private static final int DEFAULT_ROWS = 100;
 	private GpsDatabaseHelper mDB = null;
-	
-    private ArrayList<HashMap<String, String>>   listItems;    //存放文字、图片信息
-    private SimpleAdapter listItemAdapter;           //适配器    
+	List<GpsDatabaseHelper.Position> mPostions = null;
+	// asc/desc
+	private boolean mTimeAsc = true;
+	private boolean mSpeedAsc = true;
+	private String mOrderBy = GpsDatabaseHelper.POS_TIME + " asc, " + GpsDatabaseHelper.POS_SPEED + " asc";
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,38 +48,60 @@ public class SpeedsList extends BaseActivity {
 		setContentView(R.layout.speeds_list);
 		
 		mDB = new GpsDatabaseHelper(this);
+		initViews();
 		initListView();
+	}
+	
+	private void initViews() {
+		mTimeBtn = (Button)findViewById(R.id.time);
+		mTimeBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mTimeAsc = !mTimeAsc;
+				mOrderBy = getTimeOrder()
+						+ ", " 
+						+ getSpeedOrder();
+				refreshList();
+			}
+		});
+		mSpeedBtn = (Button)findViewById(R.id.speed);
+		mSpeedBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mSpeedAsc = !mSpeedAsc;
+				mOrderBy = getSpeedOrder()
+						+ ", " 
+						+ getTimeOrder();
+				refreshList();
+			}
+		});
+	}
+	
+	private String getTimeOrder() {
+		return GpsDatabaseHelper.POS_TIME 
+				+ " " + (mTimeAsc ? "asc" : "desc");
+	}
+	
+	private String getSpeedOrder() {
+		return GpsDatabaseHelper.POS_SPEED 
+				+ " " + (mSpeedAsc ? "asc" : "desc");
 	}
 	
     private void initListView() {
     	mSpeedList = (ListView)findViewById(R.id.speed_list);
-    	//List<GpsDatabaseHelper.Position> postions = mDB.queryLastest(DEFAULT_ROWS);
-    	final long start = getIntent().getLongExtra(KEY_START_TIME, -1);
-    	final long end = getIntent().getLongExtra(KEY_END_TIME, -1);
-    	List<GpsDatabaseHelper.Position> postions = mDB.query(start, end);
-    	GpsDatabaseHelper.Position pos = null;
-    	final int size = postions.size();
-        listItems = new ArrayList<HashMap<String, String>>();
-        for(int i = 0; i < size; i++)    {   
-            HashMap<String, String> map = new HashMap<String, String>();
-            //if(i < size) {
-	            pos = postions.get(i);
-	            /*map.put(KEY_TIME, getString(R.string.time_title) + getTime(pos.time));
-	            map.put(KEY_SPEED, getString(R.string.speed_title) + getSpeed(pos.speed) + getString(R.string.speed_km_unit));*/
-	            map.put(KEY_TIME, getTime(pos.time));
-	            map.put(KEY_SPEED, getSpeed(pos.speed) + getString(R.string.speed_km_unit));
-	            listItems.add(map);   
-            //}
-        }   
-        /*//生成适配器的Item和动态数组对应的元素   
-        listItemAdapter = new SimpleAdapter(this,listItems,   // listItems数据源    
-                R.layout.list_item,  //ListItem的XML布局实现  
-                new String[] {KEY_TIME, KEY_SPEED},     //动态数组与ImageItem对应的子项         
-                new int[ ] {R.id.time, R.id.speed}      //list_item.xml布局文件里面的一个ImageView的ID,一个TextView 的ID  
-        );   */
-        //setListAdapter(listItemAdapter);
-        mSpeedList.setAdapter(new SpeedAdapter());
+    	mStartTime = getIntent().getLongExtra(KEY_START_TIME, -1);
+    	mEndTime = getIntent().getLongExtra(KEY_END_TIME, -1);
+    	refreshList();
     }
+
+	private void refreshList() {
+		mPostions = mDB.query(mStartTime, mEndTime, mOrderBy);
+        mSpeedList.setAdapter(new SpeedAdapter());
+	}
     
     class ItemWrapper {
     	TextView time;
@@ -88,7 +117,7 @@ public class SpeedsList extends BaseActivity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return listItems.size();
+			return mPostions.size();
 		}
 
 		@Override
@@ -117,12 +146,10 @@ public class SpeedsList extends BaseActivity {
 				wrapper = (ItemWrapper) arg1.getTag();
 			}
 			
-			HashMap<String, String> map = listItems.get(arg0);
-			if(null != map) {
-				final String time = map.get(KEY_TIME);
-				wrapper.time.setText((arg0 + 1) + ".  " +time);
-				final String speed = map.get(KEY_SPEED);
-				wrapper.speed.setText(speed);
+			GpsDatabaseHelper.Position pos = mPostions.get(arg0);
+			if(null != pos) {
+				wrapper.time.setText((arg0 + 1) + ".  " + getTime(pos.time));
+				wrapper.speed.setText(getSpeed(pos.speed) + getString(R.string.speed_km_unit));
 			}
 			return arg1;
 		}

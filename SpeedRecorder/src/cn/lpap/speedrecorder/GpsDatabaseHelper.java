@@ -14,9 +14,9 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     
     private static final int version = 1; //数据库版本  
     private static final String TABLE_NAME = "position";
-    private static final String POS_TIME = "time";
+    public static final String POS_TIME = "time";
     private static final String POS_TIME_DESC = "timeDesc";
-    private static final String POS_SPEED = "speed";
+    public static final String POS_SPEED = "speed";
     private static final String POS_SPEED_DESC = "speedDesc";
     private static final String POS_LONG = "longitude";
     private static final String POS_LAN = "latitude";
@@ -82,7 +82,8 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     }
     
     public List<Position> query(final long startTime,
-    		final long endTime) {
+    		final long endTime, 
+    		final String orderBy) {
     	Cursor c = null; 
     	List<Position> positions = new ArrayList<GpsDatabaseHelper.Position>();
     	try {
@@ -92,7 +93,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
 	        		new String[] {String.valueOf(startTime), String.valueOf(endTime)}, 
 	        		null, 
 	        		null, 
-	        		null);
+	        		orderBy);
 	        if(0 < c.getCount()) {
 	        	c.moveToFirst();
 	        	final int timeIndex = c.getColumnIndex(POS_TIME);
