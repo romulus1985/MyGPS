@@ -55,6 +55,10 @@ public class TimeSelect extends BaseActivity {
 				Intent query = new Intent(TimeSelect.this, SpeedsList.class);
 				query.putExtra(SpeedsList.KEY_START_TIME, startTime);
 				query.putExtra(SpeedsList.KEY_END_TIME, endTime);
+				if(startTime > endTime) {
+					showToast(getString(R.string.select_time_error));
+					return;
+				}
 				
 				/*Date date = new Date(startTime);
 				showToast("start = " + date);

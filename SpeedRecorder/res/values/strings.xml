@@ -23,4 +23,5 @@
 	<string name="select_start_time">开始时间:</string>
 	<string name="select_end_time">结束时间:</string>
 	<string name="query">查询</string>
+	<string name="select_time_error">开始时间晚于结束时间，请重新选择时间</string>
 </resources>
