@@ -124,12 +124,10 @@ public class SpeedsList extends BaseActivity {
     	
     }
     
-    private String getTime(final String timeIn) {
+    private String getTime(final long timeIn) {
     	String timeOut = "";
-    	long time = 0;
     	try {
-	    	time = Long.valueOf(timeIn);
-	    	Date date = new Date(time);
+	    	Date date = new Date(timeIn);
 	    	timeOut = date.toLocaleString();
     	} catch (NumberFormatException e) {
     		e.printStackTrace();

@@ -70,15 +70,15 @@ public class GpsService extends Service {
 		mLm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         mLm.addGpsStatusListener(mGpsStatListener);
         
-        // °ó¶¨¼àÌý£¬ÓÐ4¸ö²ÎÊý  
-        // ²ÎÊý1£¬Éè±¸£ºÓÐGPS_PROVIDERºÍNETWORK_PROVIDERÁ½ÖÖ  
-        // ²ÎÊý2£¬Î»ÖÃÐÅÏ¢¸üÐÂÖÜÆÚ£¬µ¥Î»ºÁÃë  
-        // ²ÎÊý3£¬Î»ÖÃ±ä»¯×îÐ¡¾àÀë£ºµ±Î»ÖÃ¾àÀë±ä»¯³¬¹ý´ËÖµÊ±£¬½«¸üÐÂÎ»ÖÃÐÅÏ¢  
-        // ²ÎÊý4£¬¼àÌý  
-        // ±¸×¢£º²ÎÊý2ºÍ3£¬Èç¹û²ÎÊý3²»Îª0£¬ÔòÒÔ²ÎÊý3Îª×¼£»²ÎÊý3Îª0£¬ÔòÍ¨¹ýÊ±¼äÀ´¶¨Ê±¸üÐÂ£»Á½ÕßÎª0£¬ÔòËæÊ±Ë¢ÐÂ  
+        // ï¿½ó¶¨¼ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+        // ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½GPS_PROVIDERï¿½ï¿½NETWORK_PROVIDERï¿½ï¿½ï¿½ï¿½  
+        // ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½  
+        // ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½Î»ï¿½Ã±ä»¯ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ë£ºï¿½ï¿½Î»ï¿½Ã¾ï¿½ï¿½ï¿½ä»¯ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Ï¢  
+        // ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+        // ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½3Îª×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3Îª0ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Ë¢ï¿½ï¿½  
   
-        // 1Ãë¸üÐÂÒ»´Î£¬»ò×îÐ¡Î»ÒÆ±ä»¯³¬¹ý1Ã×¸üÐÂÒ»´Î£»  
-        // ×¢Òâ£º´Ë´¦¸üÐÂ×¼È·¶È·Ç³£µÍ£¬ÍÆ¼öÔÚserviceÀïÃæÆô¶¯Ò»¸öThread£¬ÔÚrunÖÐsleep(10000);È»ºóÖ´ÐÐhandler.sendMessage(),¸üÐÂÎ»ÖÃ  
+        // 1ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Î»ï¿½Æ±ä»¯ï¿½ï¿½ï¿½ï¿½1ï¿½×¸ï¿½ï¿½ï¿½Ò»ï¿½Î£ï¿½  
+        // ×¢ï¿½â£ºï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½×¼È·ï¿½È·Ç³ï¿½ï¿½Í£ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½serviceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Threadï¿½ï¿½ï¿½ï¿½runï¿½ï¿½sleep(10000);È»ï¿½ï¿½Ö´ï¿½ï¿½handler.sendMessage(),ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½  
         mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
         //lm.requestLocationUpdates(bestProvider, 1000, 1, locationListener);
 	}
@@ -95,7 +95,7 @@ public class GpsService extends Service {
 				 0);
 		 notification.setLatestEventInfo(this, 
 				 "GpsService", 
-				 "Çë±£³Ö³ÌÐòÔÚºóÌ¨ÔËÐÐ",
+				 "ï¿½ë±£ï¿½Ö³ï¿½ï¿½ï¿½ï¿½Úºï¿½Ì¨ï¿½ï¿½ï¿½ï¿½",
 				 pendingintent);
 		 startForeground(0x111, notification);
 		 return super.onStartCommand(intent, flags, startId);
@@ -132,25 +132,25 @@ public class GpsService extends Service {
 	}
 	
 	/** 
-     * ·µ»Ø²éÑ¯Ìõ¼þ 
+     * ï¿½ï¿½ï¿½Ø²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ 
      *  
      * @return 
      */  
     private Criteria getCriteria() {  
         Criteria criteria = new Criteria();  
-        // ÉèÖÃ¶¨Î»¾«È·¶È Criteria.ACCURACY_COARSE±È½Ï´ÖÂÔ£¬Criteria.ACCURACY_FINEÔò±È½Ï¾«Ï¸  
+        // ï¿½ï¿½ï¿½Ã¶ï¿½Î»ï¿½ï¿½È·ï¿½ï¿½ Criteria.ACCURACY_COARSEï¿½È½Ï´ï¿½ï¿½Ô£ï¿½Criteria.ACCURACY_FINEï¿½ï¿½È½Ï¾ï¿½Ï¸  
         criteria.setAccuracy(Criteria.ACCURACY_FINE);  
-        // ÉèÖÃÊÇ·ñÒªÇóËÙ¶È  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Òªï¿½ï¿½ï¿½Ù¶ï¿½  
         //criteria.setSpeedRequired(false);
         criteria.setSpeedRequired(true);  
-        // ÉèÖÃÊÇ·ñÔÊÐíÔËÓªÉÌÊÕ·Ñ  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½Õ·ï¿½  
         criteria.setCostAllowed(false);  
-        // ÉèÖÃÊÇ·ñÐèÒª·½Î»ÐÅÏ¢  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½Î»ï¿½ï¿½Ï¢  
         //criteria.setBearingRequired(false);  
         criteria.setBearingRequired(true);  
-        // ÉèÖÃÊÇ·ñÐèÒªº£°ÎÐÅÏ¢  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢  
         criteria.setAltitudeRequired(false);  
-        // ÉèÖÃ¶ÔµçÔ´µÄÐèÇó  
+        // ï¿½ï¿½ï¿½Ã¶Ôµï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         criteria.setPowerRequirement(Criteria.POWER_LOW);  
         return criteria;  
     }  
@@ -163,11 +163,11 @@ public class GpsService extends Service {
 
 
 	
-	// Î»ÖÃ¼àÌý  
+	// Î»ï¿½Ã¼ï¿½ï¿½ï¿½  
     private LocationListener mLocationListener = new LocationListener() {  
   
         /** 
-         * Î»ÖÃÐÅÏ¢±ä»¯Ê±´¥·¢ 
+         * Î»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ä»¯Ê±ï¿½ï¿½ï¿½ï¿½ 
          */  
         public void onLocationChanged(Location location) {  
         	notifyListeners(location);
@@ -183,43 +183,43 @@ public class GpsService extends Service {
     		String dateDesc = sdf.format(cal.getTime());
     		final float speed = location.getSpeed();
     		final float speedManual = Utils.getSpeed(speed);
-            mDb.insert(String.valueOf(cal.getTimeInMillis()), 
+            mDb.insert(cal.getTimeInMillis(), 
             		dateDesc,
             		String.valueOf(location.getSpeed()), 
             		String.valueOf(speedManual),
             		String.valueOf(location.getLongitude()),
             		String.valueOf(location.getLatitude()));
-            Log.i(TAG, "Ê±¼ä£º" + location.getTime());  
-            Log.i(TAG, "¾­¶È£º" + location.getLongitude());  
-            Log.i(TAG, "Î³¶È£º" + location.getLatitude());  
-            Log.i(TAG, "º£°Î£º" + location.getAltitude());  
+            Log.i(TAG, "Ê±ï¿½ä£º" + location.getTime());  
+            Log.i(TAG, "ï¿½ï¿½ï¿½È£ï¿½" + location.getLongitude());  
+            Log.i(TAG, "Î³ï¿½È£ï¿½" + location.getLatitude());  
+            Log.i(TAG, "ï¿½ï¿½ï¿½Î£ï¿½" + location.getAltitude());  
         }  
   
         /** 
-         * GPS×´Ì¬±ä»¯Ê±´¥·¢ 
+         * GPS×´Ì¬ï¿½ä»¯Ê±ï¿½ï¿½ï¿½ï¿½ 
          */  
         public void onStatusChanged(String provider, int status, Bundle extras) {  
             switch (status) {  
-            // GPS×´Ì¬Îª¿É¼ûÊ±  
+            // GPS×´Ì¬Îªï¿½É¼ï¿½Ê±  
             case LocationProvider.AVAILABLE:  
-                Log.i(TAG, "µ±Ç°GPS×´Ì¬Îª¿É¼û×´Ì¬"); 
-                //showToast("µ±Ç°GPS×´Ì¬Îª¿É¼û×´Ì¬");
+                Log.i(TAG, "ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½É¼ï¿½×´Ì¬"); 
+                //showToast("ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½É¼ï¿½×´Ì¬");
                 break;  
-            // GPS×´Ì¬Îª·þÎñÇøÍâÊ±  
+            // GPS×´Ì¬Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±  
             case LocationProvider.OUT_OF_SERVICE:  
-                Log.i(TAG, "µ±Ç°GPS×´Ì¬Îª·þÎñÇøÍâ×´Ì¬"); 
-                //showToast("µ±Ç°GPS×´Ì¬Îª·þÎñÇøÍâ×´Ì¬"); 
+                Log.i(TAG, "ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬"); 
+                //showToast("ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬"); 
                 break;  
-            // GPS×´Ì¬ÎªÔÝÍ£·þÎñÊ±  
+            // GPS×´Ì¬Îªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½Ê±  
             case LocationProvider.TEMPORARILY_UNAVAILABLE:  
-                Log.i(TAG, "µ±Ç°GPS×´Ì¬ÎªÔÝÍ£·þÎñ×´Ì¬");   
-                //showToast("µ±Ç°GPS×´Ì¬ÎªÔÝÍ£·þÎñ×´Ì¬"); 
+                Log.i(TAG, "ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½×´Ì¬");   
+                //showToast("ï¿½ï¿½Ç°GPS×´Ì¬Îªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½×´Ì¬"); 
                 break;  
             }  
         }  
   
         /** 
-         * GPS¿ªÆôÊ±´¥·¢ 
+         * GPSï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ 
          */  
         public void onProviderEnabled(String provider) {  
             Location location = mLm.getLastKnownLocation(provider);  
@@ -228,7 +228,7 @@ public class GpsService extends Service {
         }  
   
         /** 
-         * GPS½ûÓÃÊ±´¥·¢ 
+         * GPSï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ 
          */  
         public void onProviderDisabled(String provider) {  
             //updateView(null);  
@@ -237,24 +237,24 @@ public class GpsService extends Service {
   
     }; 
     
- // ×´Ì¬¼àÌý  
+ // ×´Ì¬ï¿½ï¿½ï¿½ï¿½  
     GpsStatus.Listener mGpsStatListener = new GpsStatus.Listener() {  
         public void onGpsStatusChanged(int event) {  
             switch (event) {  
-            // µÚÒ»´Î¶¨Î»  
+            // ï¿½ï¿½Ò»ï¿½Î¶ï¿½Î»  
             case GpsStatus.GPS_EVENT_FIRST_FIX:  
-                Log.i(TAG, "µÚÒ»´Î¶¨Î»");   
-                //showToast("µÚÒ»´Î¶¨Î»"); 
+                Log.i(TAG, "ï¿½ï¿½Ò»ï¿½Î¶ï¿½Î»");   
+                //showToast("ï¿½ï¿½Ò»ï¿½Î¶ï¿½Î»"); 
                 break;  
-            // ÎÀÐÇ×´Ì¬¸Ä±ä  
+            // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä±ï¿½  
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                Log.i(TAG, "ÎÀÐÇ×´Ì¬¸Ä±ä");  
-                //showToast("ÎÀÐÇ×´Ì¬¸Ä±ä"); 
-                // »ñÈ¡µ±Ç°×´Ì¬  
+                Log.i(TAG, "ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä±ï¿½");  
+                //showToast("ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä±ï¿½"); 
+                // ï¿½ï¿½È¡ï¿½ï¿½Ç°×´Ì¬  
                 GpsStatus gpsStatus = mLm.getGpsStatus(null);  
-                // »ñÈ¡ÎÀÐÇ¿ÅÊýµÄÄ¬ÈÏ×î´óÖµ  
+                // ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½Öµ  
                 int maxSatellites = gpsStatus.getMaxSatellites();  
-                // ´´½¨Ò»¸öµü´úÆ÷±£´æËùÓÐÎÀÐÇ  
+                // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
                 Iterator<GpsSatellite> iters = gpsStatus.getSatellites()  
                         .iterator();  
                 int count = 0;  
@@ -262,18 +262,18 @@ public class GpsService extends Service {
                     GpsSatellite s = iters.next();  
                     count++;  
                 }  
-                System.out.println("ËÑË÷µ½£º" + count + "¿ÅÎÀÐÇ");   
-                //showToast("ËÑË÷µ½£º" + count + "¿ÅÎÀÐÇ"); 
+                System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + count + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");   
+                //showToast("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + count + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"); 
                 break;  
-            // ¶¨Î»Æô¶¯  
+            // ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½  
             case GpsStatus.GPS_EVENT_STARTED:
-                Log.i(TAG, "¶¨Î»Æô¶¯");  
-                //showToast("¶¨Î»Æô¶¯"); 
+                Log.i(TAG, "ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½");  
+                //showToast("ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½"); 
                 break;  
-            // ¶¨Î»½áÊø  
+            // ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½  
             case GpsStatus.GPS_EVENT_STOPPED:  
-                Log.i(TAG, "¶¨Î»½áÊø");  
-                //showToast("¶¨Î»½áÊø"); 
+                Log.i(TAG, "ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½");  
+                //showToast("ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½"); 
                 break;  
             }  
         };  

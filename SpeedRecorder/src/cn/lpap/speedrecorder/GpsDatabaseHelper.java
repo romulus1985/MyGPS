@@ -35,7 +35,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
 
           db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + 
         		  " (positionid integer primary key autoincrement, "
-        		  + POS_TIME + " varchar(20), "
+        		  + POS_TIME + " INT, "
         		  + POS_TIME_DESC + " varchar(30), "
         		  + POS_SPEED + " varchar(20), "
         		  + POS_SPEED_DESC + " varchar(20), "
@@ -50,7 +50,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
      }
     
     public class Position {
-    	String time;
+    	long time;
     	String speed;
     }
     public List<Position> queryLastest(final int maxCount) {
@@ -65,7 +65,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
 	        	int i = 0;
 	        	do{
 	        		Position pos = new Position();
-	        		pos.time = c.getString(timeIndex);
+	        		pos.time = c.getLong(timeIndex);
 	        		pos.speed = c.getString(speedIndex);
 	        		positions.add(pos);
 	        		c.moveToPrevious();
@@ -81,7 +81,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     	return positions;
     }
     
-    public void insert(final String time, 
+    public void insert(final long time, 
     		final String timeDesc,
     		final String speed, 
     		final String speedDesc,
