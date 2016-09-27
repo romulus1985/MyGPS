@@ -3,33 +3,79 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <DatePicker android:id="@+id/datePicker" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-    <EditText android:id="@+id/dateEt"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:editable="false"/>
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    >
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:textSize="30sp"
+	        android:text="@string/select_date"
+	        />
+	    <DatePicker android:id="@+id/datePicker" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"/>
+	    <!-- <EditText android:id="@+id/dateEt"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:cursorVisible="false"
+	        android:editable="false"/> -->
+    </LinearLayout>
     
-    <TimePicker android:id="@+id/timePicker" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-    <EditText android:id="@+id/timeEt"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:editable="false"/>
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    >
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:textSize="30sp"
+	        android:text="@string/select_start_time"
+	        />
+	    <TimePicker android:id="@+id/timePicker" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"/>
+	    <!-- <EditText android:id="@+id/timeEt"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:cursorVisible="false"
+	        android:editable="false"/> -->
+    </LinearLayout>
     
-    <TimePicker android:id="@+id/endTimePicker" 
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    >
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:textSize="30sp"
+	        android:text="@string/select_end_time"
+	        />
+	    <TimePicker android:id="@+id/endTimePicker" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"/>
+	    <!-- <EditText android:id="@+id/endTimeEt"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:cursorVisible="false"
+        android:editable="false"/> -->
+    </LinearLayout>
+    <Button
+        android:id="@+id/query"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-    <EditText android:id="@+id/endTimeEt"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:editable="false"/>
+        android:layout_marginLeft="40dp"
+        android:text="@string/query"
+        />
 </LinearLayout>

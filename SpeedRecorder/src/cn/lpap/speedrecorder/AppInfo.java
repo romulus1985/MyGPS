@@ -35,6 +35,10 @@ public class AppInfo extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent positionsList = new Intent(AppInfo.this, SpeedsList.class);
+		    	final long cur = System.currentTimeMillis() + 1;
+		    	final long start = cur - Utils.DAY_IN_MILLI_SECOND;
+				positionsList.putExtra(SpeedsList.KEY_START_TIME, start);
+				positionsList.putExtra(SpeedsList.KEY_END_TIME, cur);
 				startActivity(positionsList);
 			}
 		});

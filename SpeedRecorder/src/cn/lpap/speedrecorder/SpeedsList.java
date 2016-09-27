@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 public class SpeedsList extends BaseActivity {
 	private ListView mSpeedList = null;
+	public static final String KEY_START_TIME = "key_start_time";
+	public static final String KEY_END_TIME = "key_end_time";
 	
 	private static final String KEY_TIME = "time";
 	private static final String KEY_SPEED = "speed";
@@ -45,8 +47,9 @@ public class SpeedsList extends BaseActivity {
     private void initListView() {
     	mSpeedList = (ListView)findViewById(R.id.speed_list);
     	//List<GpsDatabaseHelper.Position> postions = mDB.queryLastest(DEFAULT_ROWS);
-    	final long cur = System.currentTimeMillis() + 1;
-    	List<GpsDatabaseHelper.Position> postions = mDB.query(cur - Utils.DAY_IN_MILLI_SECOND, cur);
+    	final long start = getIntent().getLongExtra(KEY_START_TIME, -1);
+    	final long end = getIntent().getLongExtra(KEY_END_TIME, -1);
+    	List<GpsDatabaseHelper.Position> postions = mDB.query(start, end);
     	GpsDatabaseHelper.Position pos = null;
     	final int size = postions.size();
         listItems = new ArrayList<HashMap<String, String>>();

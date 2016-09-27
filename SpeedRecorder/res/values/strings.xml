@@ -19,4 +19,8 @@
 	<string name="export_db_ok">导出数据库文件成功</string>
 	<string name="header_time">时间</string>
 	<string name="header_speed">速度</string>
+	<string name="select_date">选择日期:</string>
+	<string name="select_start_time">开始时间:</string>
+	<string name="select_end_time">结束时间:</string>
+	<string name="query">查询</string>
 </resources>
