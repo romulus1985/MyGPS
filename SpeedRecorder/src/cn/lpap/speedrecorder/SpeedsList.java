@@ -44,20 +44,22 @@ public class SpeedsList extends BaseActivity {
 	
     private void initListView() {
     	mSpeedList = (ListView)findViewById(R.id.speed_list);
-    	List<GpsDatabaseHelper.Position> postions = mDB.queryLastest(DEFAULT_ROWS);
+    	//List<GpsDatabaseHelper.Position> postions = mDB.queryLastest(DEFAULT_ROWS);
+    	final long cur = System.currentTimeMillis() + 1;
+    	List<GpsDatabaseHelper.Position> postions = mDB.query(cur - Utils.DAY_IN_MILLI_SECOND, cur);
     	GpsDatabaseHelper.Position pos = null;
     	final int size = postions.size();
         listItems = new ArrayList<HashMap<String, String>>();
-        for(int i = 0; i < DEFAULT_ROWS; i++)    {   
+        for(int i = 0; i < size; i++)    {   
             HashMap<String, String> map = new HashMap<String, String>();
-            if(i < size) {
+            //if(i < size) {
 	            pos = postions.get(i);
 	            /*map.put(KEY_TIME, getString(R.string.time_title) + getTime(pos.time));
 	            map.put(KEY_SPEED, getString(R.string.speed_title) + getSpeed(pos.speed) + getString(R.string.speed_km_unit));*/
 	            map.put(KEY_TIME, getTime(pos.time));
 	            map.put(KEY_SPEED, getSpeed(pos.speed) + getString(R.string.speed_km_unit));
 	            listItems.add(map);   
-            }
+            //}
         }   
         /*//生成适配器的Item和动态数组对应的元素   
         listItemAdapter = new SimpleAdapter(this,listItems,   // listItems数据源    

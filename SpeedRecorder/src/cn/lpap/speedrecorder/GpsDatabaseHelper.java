@@ -81,6 +81,38 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     	return positions;
     }
     
+    public List<Position> query(final long startTime,
+    		final long endTime) {
+    	Cursor c = null; 
+    	List<Position> positions = new ArrayList<GpsDatabaseHelper.Position>();
+    	try {
+	        c = getReadableDatabase().query(TABLE_NAME, 
+	        		null, 
+	        		POS_TIME + " > ? and " + POS_TIME + " < ?", 
+	        		new String[] {String.valueOf(startTime), String.valueOf(endTime)}, 
+	        		null, 
+	        		null, 
+	        		null);
+	        if(0 < c.getCount()) {
+	        	c.moveToFirst();
+	        	final int timeIndex = c.getColumnIndex(POS_TIME);
+	        	final int speedIndex = c.getColumnIndex(POS_SPEED);
+	        	while(!c.isAfterLast()){
+	        		Position pos = new Position();
+	        		pos.time = c.getLong(timeIndex);
+	        		pos.speed = c.getString(speedIndex);
+	        		positions.add(pos);
+	        		c.moveToNext();
+	        	}
+        	}
+		} finally {
+			if(null != c) {
+				c.close();
+			}
+		}
+    	return positions;
+    }
+    
     public void insert(final long time, 
     		final String timeDesc,
     		final String speed, 
