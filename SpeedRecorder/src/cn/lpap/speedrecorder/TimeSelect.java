@@ -18,9 +18,9 @@ import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
 
 public class TimeSelect extends BaseActivity {
-    private EditText dateEt = null;
+    /*private EditText dateEt = null;
     private EditText timeEt = null;
-    private EditText endTimeEt = null;
+    private EditText endTimeEt = null;*/
     private Button mQuery = null;
     
     private int mYear = 0;
