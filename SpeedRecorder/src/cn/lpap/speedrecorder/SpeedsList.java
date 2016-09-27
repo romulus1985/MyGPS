@@ -37,9 +37,15 @@ public class SpeedsList extends BaseActivity {
 	private GpsDatabaseHelper mDB = null;
 	List<GpsDatabaseHelper.Position> mPostions = null;
 	// asc/desc
-	private boolean mTimeAsc = true;
+	// smaller to bigger, asc; otherwise desc
+	private boolean mTimeAsc = false;
 	private boolean mSpeedAsc = true;
-	private String mOrderBy = GpsDatabaseHelper.POS_TIME + " asc, " + GpsDatabaseHelper.POS_SPEED + " asc";
+	private String mOrderBy = null; //GpsDatabaseHelper.POS_TIME + " asc, " + GpsDatabaseHelper.POS_SPEED + " asc";
+	{
+		mOrderBy = getTimeOrder()
+				+ ", " 
+				+ getSpeedOrder();
+	}
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
