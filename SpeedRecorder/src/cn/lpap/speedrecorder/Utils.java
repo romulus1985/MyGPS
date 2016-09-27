@@ -1,9 +1,12 @@
 package cn.lpap.speedrecorder;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.os.Environment;
 
 public class Utils {
 	public static final String EXPORT_FOLDER = "cn_lpap_speedrecorder";
@@ -24,5 +27,15 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat("_yyyy_MM_dd_HH_mm_ss");
 		final String dateDesc = sdf.format(new Date());
 		return dateDesc;
+	}
+	
+	public static String getExportFolder() {
+		final String exportPath = Environment.getExternalStorageDirectory() 
+				+ File.separator + Utils.EXPORT_FOLDER;
+		File exportFolder = new File(exportPath);
+		if(!exportFolder.exists()) {
+			exportFolder.mkdir();
+		}
+		return exportPath;
 	}
 }

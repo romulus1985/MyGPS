@@ -56,8 +56,7 @@ public class AppInfo extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				final String oldPath = "/data/data/" + getPackageName() + "/databases/" + GpsDatabaseHelper.DB_NAME;
-				final String newPath = Environment.getExternalStorageDirectory() 
-						+ File.separator + Utils.EXPORT_FOLDER
+				final String newPath = Utils.getExportFolder()
 						+ File.separator + GpsDatabaseHelper.DB_NAME + Utils.getUniqueName();
 				copyFile(oldPath, newPath);
 			}
@@ -76,12 +75,6 @@ public class AppInfo extends BaseActivity {
 			if(newFile.exists()) {
 				newFile.delete();
 			} 
-			
-			File exportFolder = new File(Environment.getExternalStorageDirectory() 
-							+ File.separator + Utils.EXPORT_FOLDER);
-			if(!exportFolder.exists()) {
-				exportFolder.mkdir();
-			}
 			
 			newFile.createNewFile();
 			if(!oldFile.exists()) {
