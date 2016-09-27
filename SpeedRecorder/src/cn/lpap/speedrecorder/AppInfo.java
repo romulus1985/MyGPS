@@ -61,7 +61,7 @@ public class AppInfo extends BaseActivity {
 				// TODO Auto-generated method stub
 				final String oldPath = "/data/data/" + getPackageName() + "/databases/" + GpsDatabaseHelper.DB_NAME;
 				final String newPath = Utils.getExportFolder()
-						+ File.separator + GpsDatabaseHelper.DB_NAME + Utils.getUniqueName();
+						+ File.separator + GpsDatabaseHelper.DB_NAME + Utils.getUniqueName() + ".db";
 				copyFile(oldPath, newPath);
 			}
 		});
