@@ -24,6 +24,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class GpsService extends Service {
@@ -65,12 +66,16 @@ public class GpsService extends Service {
 			}
 		};
 	};
-	
+	PowerManager.WakeLock mWl = null;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		sStarted = true;
+		
+		PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+		mWl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getPackageName());
+		mWl.acquire();
 		
 		mBinder = new MyBinder();
 		
@@ -303,5 +308,6 @@ public class GpsService extends Service {
 		super.onDestroy();
 		mLm.removeUpdates(mLocationListener); 
 		stopForeground(true);
+		mWl.release();
 	}
 }
