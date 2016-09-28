@@ -214,6 +214,7 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 	@Override
 	public void resetSpeed(final float oldSpeed) {
 		// TODO Auto-generated method stub
+		LogUtil.log("resetSpeed: oldSpeed = " + oldSpeed);
 		showToast(getString(R.string.location_change_error, oldSpeed));
 		mSpeedTv.setText("0" + getString(R.string.speed_km_unit));
 	}

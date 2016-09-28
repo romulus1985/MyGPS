@@ -111,6 +111,7 @@ public class GpsService extends Service {
 	}
 	
 	public void reqLastKnownLocation(){
+		LogUtil.log("reqLastKnownLocation enter.");
 		final String bestProvider = mLm.getBestProvider(getCriteria(), true);  
         Location location = mLm.getLastKnownLocation(bestProvider); 
         notifyListeners(location);
@@ -231,6 +232,7 @@ public class GpsService extends Service {
          * GPS����ʱ���� 
          */  
         public void onProviderEnabled(String provider) {  
+        	LogUtil.log("onProviderEnabled: provider = " + provider);
             Location location = mLm.getLastKnownLocation(provider);  
             //updateView(location);  
             notifyListeners(location);
@@ -240,6 +242,7 @@ public class GpsService extends Service {
          * GPS����ʱ���� 
          */  
         public void onProviderDisabled(String provider) {  
+        	LogUtil.log("onProviderDisabled: provider = " + provider);
             //updateView(null);  
             notifyListeners(null);
         }  
