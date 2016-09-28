@@ -41,19 +41,21 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
     private EditText mOtherInfo = null;
     
     private boolean mResumed = false;
+    GpsService gpsService = null;
     ServiceConnection sc = new ServiceConnection() {
 		
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			// TODO Auto-generated method stub
-			
+			gpsService.removeListener(MainActivity.this);
+			gpsService = null;
 		}
 		
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			// TODO Auto-generated method stub
 			GpsService.MyBinder binder = (GpsService.MyBinder)service;
-			GpsService gpsService = binder.getService();
+			gpsService = binder.getService();
 			gpsService.addListener(MainActivity.this);
 			gpsService.reqLastKnownLocation();
 		}
