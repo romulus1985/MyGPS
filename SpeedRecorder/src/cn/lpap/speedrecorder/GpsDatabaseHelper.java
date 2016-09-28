@@ -130,6 +130,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
         cv.put(POS_LAN, latitude);
         LogUtil.log("insert: timeDesc = " + timeDesc + ", speedDesc = " + speedDesc);
         long inserted = getWritableDatabase().insert(TABLE_NAME, null, cv);  
+        LogUtil.log("insert: timeDesc = " + timeDesc + ", speedDesc = " + speedDesc + ", inserted = " + inserted);
         return inserted;
     } 
 }
