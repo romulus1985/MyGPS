@@ -9,7 +9,8 @@ import java.util.Date;
 import android.os.Environment;
 
 public class Utils {
-	public static final String EXPORT_FOLDER = "cn_lpap_speedrecorder";
+	private static final String EXPORT_FOLDER = "cn_lpap_speedrecorder";
+	private static String sExportFolder = null;
 	
 	public static final long DAY_IN_MILLI_SECOND = 24 * 60 * 60 * 1000;
 	
@@ -32,13 +33,25 @@ public class Utils {
 		return dateDesc;
 	}
 	
+	public static String getUniqueHourName() {
+        SimpleDateFormat sdf = new SimpleDateFormat("_yyyy_MM_dd_HH");
+		final String dateDesc = sdf.format(new Date());
+		return dateDesc;
+	}
+	
 	public static String getExportFolder() {
-		final String exportPath = Environment.getExternalStorageDirectory() 
-				+ File.separator + Utils.EXPORT_FOLDER;
-		File exportFolder = new File(exportPath);
-		if(!exportFolder.exists()) {
-			exportFolder.mkdir();
+		if(null == sExportFolder) {
+			synchronized (Utils.class) {
+				if(null == sExportFolder) {
+					sExportFolder = Environment.getExternalStorageDirectory() 
+							+ File.separator + Utils.EXPORT_FOLDER;
+					File exportFile = new File(sExportFolder);
+					if(!exportFile.exists()) {
+						exportFile.mkdir();
+					}
+				}
+			}
 		}
-		return exportPath;
+		return sExportFolder;
 	}
 }

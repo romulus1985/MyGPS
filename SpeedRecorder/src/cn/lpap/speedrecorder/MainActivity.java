@@ -109,8 +109,10 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
      *  
      * @param location 
      */  
-    private void updateView(Location location) {  
-        mSpeedTv.setText(getSpeed(location));
+    private void updateView(Location location) {
+    	final String speed = getSpeed(location);
+        mSpeedTv.setText(speed);
+        String time = null;
         mPostion.setText(getString(R.string.position_title) + getPosition(location));
         if (location != null) {
             mOtherInfo.setText(getString(R.string.long_title));
@@ -119,11 +121,13 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
             mOtherInfo.append(String.valueOf(location.getLatitude()) + "\n");  
             
             mOtherInfo.append(getString(R.string.time_title));
-            mOtherInfo.append(getTime(location) + "\n");
+            time = getTime(location);
+            mOtherInfo.append(time + "\n");
         } else {  
             // 清空EditText对象  
             mOtherInfo.getEditableText().clear();  
         }  
+        LogUtil.log("updateView: " + " speed = " + speed + ", time = " + time);
     }  
     
     private String getPosition(final Location location) {
