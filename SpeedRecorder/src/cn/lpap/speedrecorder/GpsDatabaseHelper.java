@@ -114,7 +114,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
     	return positions;
     }
     
-    public void insert(final long time, 
+    public long insert(final long time, 
     		final String timeDesc,
     		final float speed, 
     		final String speedDesc,
@@ -129,6 +129,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
         cv.put(POS_LONG, longitude);  
         cv.put(POS_LAN, latitude);
           
-        getWritableDatabase().insert(TABLE_NAME, null, cv);  
+        long inserted = getWritableDatabase().insert(TABLE_NAME, null, cv);  
+        return inserted;
     } 
 }
