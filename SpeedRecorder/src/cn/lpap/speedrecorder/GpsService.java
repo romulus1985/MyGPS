@@ -33,6 +33,13 @@ public class GpsService extends Service {
 		public void onLocationChanged(Location location);
 		public void resetSpeed(final float oldSpeed);
 	}
+	
+	private static boolean sStarted = false;
+	
+	public static boolean issStarted() {
+		return sStarted;
+	}
+
 	private MyBinder mBinder;	
 	private LocationManager mLm = null;
 	private static final long MIN_TIME = 1000;
@@ -63,6 +70,8 @@ public class GpsService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		sStarted = true;
+		
 		mBinder = new MyBinder();
 		
 		mDb = new GpsDatabaseHelper(this);

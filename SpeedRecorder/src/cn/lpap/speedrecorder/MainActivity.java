@@ -66,6 +66,11 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 		
 		setContentView(R.layout.main);
 		
+		if(!GpsService.issStarted()) {
+			Intent start = new Intent(this, GpsService.class);
+			startService(start);
+		}
+		
 		initView();
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {  
