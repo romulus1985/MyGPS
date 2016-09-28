@@ -104,7 +104,7 @@ public class GpsService extends Service {
 				 0);
 		 notification.setLatestEventInfo(this, 
 				 "GpsService", 
-				 "�뱣�ֳ����ں�̨����",
+				 "Speed recorder contextText",
 				 pendingintent);
 		 startForeground(0x111, notification);
 		 return super.onStartCommand(intent, flags, startId);
