@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 public class AppInfo extends BaseActivity {
     private Button mQuerySpeeds = null;
+    private Button mQuerySpeedsHour = null;
     private Button mSelectTime = null;
     private Button mExportDB = null;
 	
@@ -34,12 +35,16 @@ public class AppInfo extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent positionsList = new Intent(AppInfo.this, SpeedsList.class);
-		    	final long cur = System.currentTimeMillis() + 1;
-		    	final long start = cur - Utils.DAY_IN_MILLI_SECOND;
-				positionsList.putExtra(SpeedsList.KEY_START_TIME, start);
-				positionsList.putExtra(SpeedsList.KEY_END_TIME, cur);
-				startActivity(positionsList);
+				startQuery(Utils.DAY_IN_MILLI_SECOND);
+			}
+		});
+		mQuerySpeedsHour = (Button)findViewById(R.id.query_speeds_hour);
+		mQuerySpeedsHour.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				startQuery(Utils.HOUR_IN_MILLI_SECOND);
 			}
 		});
 		
@@ -65,6 +70,15 @@ public class AppInfo extends BaseActivity {
 				copyFile(oldPath, newPath);
 			}
 		});
+	}
+
+	private void startQuery(final long interval) {
+		Intent positionsList = new Intent(AppInfo.this, SpeedsList.class);
+    	final long cur = System.currentTimeMillis() + 1;
+    	final long start = cur - interval;
+		positionsList.putExtra(SpeedsList.KEY_START_TIME, start);
+		positionsList.putExtra(SpeedsList.KEY_END_TIME, cur);
+		startActivity(positionsList);
 	}
 	
 	private void copyFile(final String oldPath,

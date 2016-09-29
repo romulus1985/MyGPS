@@ -11,8 +11,9 @@ import android.os.Environment;
 public class Utils {
 	private static final String EXPORT_FOLDER = "cn_lpap_speedrecorder";
 	private static String sExportFolder = null;
-	
-	public static final long DAY_IN_MILLI_SECOND = 24 * 60 * 60 * 1000;
+
+	public static final long HOUR_IN_MILLI_SECOND = 60 * 60 * 1000;
+	public static final long DAY_IN_MILLI_SECOND = 24 * HOUR_IN_MILLI_SECOND;
 	
 	/*
 	 * m/s to km/s

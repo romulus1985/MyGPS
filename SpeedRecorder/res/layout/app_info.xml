@@ -11,6 +11,13 @@
         android:text="@string/query_speeds"
         />
     <Button
+        android:id="@+id/query_speeds_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="@string/query_speeds_hour"
+        />
+    <Button
         android:id="@+id/select_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
