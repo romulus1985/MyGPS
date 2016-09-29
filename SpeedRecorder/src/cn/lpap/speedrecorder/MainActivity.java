@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 	
 	private void initView() {
 		mSpeedTv = (TextView)findViewById(R.id.speed);
+		initSpeed();
 		mPostion = (TextView)findViewById(R.id.position);
 		mOtherInfo = (EditText) findViewById(R.id.other_info);
 		mAppInfo = (Button)findViewById(R.id.app_info);
@@ -218,6 +219,10 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 		// TODO Auto-generated method stub
 		LogUtil.log("resetSpeed: oldSpeed = " + oldSpeed);
 		showToast(getString(R.string.location_change_error, oldSpeed));
+		initSpeed();
+	}
+
+	private void initSpeed() {
 		mSpeedTv.setText("0" + getString(R.string.speed_km_unit));
 	}
 }
