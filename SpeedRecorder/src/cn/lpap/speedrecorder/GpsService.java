@@ -75,6 +75,13 @@ public class GpsService extends Service {
 		
 		PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
 		mWl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getPackageName());
+		/*
+		 *  On redmi, do not acqurie wake lock do not affact gps work when screen off for a little while.
+		 *  Case of long time screen off, do not test.
+		 *  So ensure gps work when screen off, acqurie wake lock.
+		 *  TODO: test whether gps work or not, when long time screen off
+		 *  PS: When screen off, power save mode must turn off, otherwise Gps certain not work. 
+		 */
 		mWl.acquire();
 		
 		mBinder = new MyBinder();
