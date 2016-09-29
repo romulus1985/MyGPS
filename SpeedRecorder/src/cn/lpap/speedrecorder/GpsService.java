@@ -119,7 +119,7 @@ public class GpsService extends Service {
 		LogUtil.log("reqLastKnownLocation enter.");
 		final String bestProvider = mLm.getBestProvider(getCriteria(), true);  
         Location location = mLm.getLastKnownLocation(bestProvider); 
-        notifyListeners(location);
+        //notifyListeners(location);
 	}
 	
 	private void notifyListeners(Location location) {
