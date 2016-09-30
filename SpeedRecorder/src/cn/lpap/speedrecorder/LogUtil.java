@@ -16,6 +16,11 @@ public class LogUtil {
 	private static long sLogTime = System.currentTimeMillis();
 	private static long LOG_INTERVAL = 1000 * 10;
 	
+	public static void logTimestamp(final String TAG, final String msg) {
+		Date date = new Date();
+		log(TAG + " at " + date.toLocaleString(), msg);
+	}
+	
 	public static void log(final String TAG, final String msg) {
 		log(TAG + ":: " + msg);
 	}

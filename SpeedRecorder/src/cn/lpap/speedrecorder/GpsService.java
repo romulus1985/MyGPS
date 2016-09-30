@@ -71,7 +71,7 @@ public class GpsService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		LogUtil.log(TAG, "onCreate enter.");
+		LogUtil.logTimestamp(TAG, "onCreate enter.");
 		
 		sStarted = true;
 		
@@ -185,7 +185,7 @@ public class GpsService extends Service {
 		}
 	}
 
-
+	boolean mFirstLocation = false;
 	
 	// λ�ü���  
     private LocationListener mLocationListener = new LocationListener() {  
@@ -194,6 +194,10 @@ public class GpsService extends Service {
          * λ����Ϣ�仯ʱ���� 
          */  
         public void onLocationChanged(Location location) {  
+        	if(!mFirstLocation) {
+        		mFirstLocation = true;
+        		LogUtil.logTimestamp(TAG, "onLocationChanged first.");
+        	}
         	notifyListeners(location);
             if(null != location) {
             	mSpeed = location.getSpeed();

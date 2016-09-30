@@ -13,8 +13,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent arg1) {
 		// TODO Auto-generated method stub
-		Date date = new Date();
-		LogUtil.log(TAG, "recevie boot completed ... at " + date.toLocaleString());  
+		LogUtil.logTimestamp(TAG, "recevie boot completed ...");  
         context.startService(new Intent(context, GpsService.class)); 
 	}
 
