@@ -71,6 +71,8 @@ public class GpsService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		LogUtil.log(TAG, "onCreate enter.");
+		
 		sStarted = true;
 		
 		PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);

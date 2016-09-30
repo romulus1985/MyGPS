@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.util.Log;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
+	private static final String TAG = "BootCompletedReceiver";
 
 	@Override
 	public void onReceive(Context context, Intent arg1) {
 		// TODO Auto-generated method stub
-		Log.d("BootCompletedReceiver", "recevie boot completed ... ");  
+		LogUtil.log(TAG, "recevie boot completed ... ");  
         context.startService(new Intent(context, GpsService.class)); 
 	}
 

@@ -15,6 +15,11 @@ public class LogUtil {
 	
 	private static long sLogTime = System.currentTimeMillis();
 	private static long LOG_INTERVAL = 1000 * 10;
+	
+	public static void log(final String TAG, final String msg) {
+		log(TAG + ":: " + msg);
+	}
+	
 	public static void log(final String msg) {
 		sBuffer.append(msg + "\n");
 		long cur = System.currentTimeMillis();
