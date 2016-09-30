@@ -270,8 +270,8 @@ public class GpsService extends Service {
             case GpsStatus.GPS_EVENT_FIRST_FIX:  
                 LogUtil.logTimestamp(TAG, "gps first fix");
                 break;  
-            // ����״̬�ı�  
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+            	// if not requestLocationUpdates, will not receive GPS_EVENT_SATELLITE_STATUS
                 //LogUtil.logTimestamp(TAG, "gps satellite status.");
                 GpsStatus gpsStatus = mLm.getGpsStatus(null);
                 int maxSatellites = gpsStatus.getMaxSatellites();
@@ -290,6 +290,10 @@ public class GpsService extends Service {
                 	LogUtil.log(TAG, "get " + count + " satellites" + ", used = " + used 
                 			+ ", TimeToFirstFix = " + gpsStatus.getTimeToFirstFix());
                 	if(!reqLocationUpdates) {
+                		/*
+                		 *  TODO: if not requestLocationUpdates, will not receive GPS_EVENT_SATELLITE_STATUS
+                		 *  change sequence to invoke following sentences.
+                		 */
                 		LogUtil.log("reqLocationUpdates, thread name = " + Thread.currentThread().getName());
                 		reqLocationUpdates = true;
                 		reqLocationUpdates();
