@@ -71,7 +71,7 @@ public class GpsService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		LogUtil.logTimestamp(TAG, "onCreate enter.");
+		LogUtil.logTimestamp(TAG, "onCreate enter. thread name = " + Thread.currentThread().getName());
 		
 		sStarted = true;
 		
@@ -91,7 +91,8 @@ public class GpsService extends Service {
 		mDb = new GpsDatabaseHelper(this);
 		
 		mLm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        mLm.addGpsStatusListener(mGpsStatListener);
+        boolean added = mLm.addGpsStatusListener(mGpsStatListener);
+        LogUtil.logTimestamp(TAG, "added = " + added);
         
         // �󶨼�����4������  
         // ����1���豸����GPS_PROVIDER��NETWORK_PROVIDER����  
