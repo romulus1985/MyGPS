@@ -125,7 +125,7 @@ public class GpsService extends Service {
 	}
 	
 	public void reqLastKnownLocation(){
-		LogUtil.log("reqLastKnownLocation enter.");
+		LogUtil.logTimestamp(TAG, "reqLastKnownLocation enter.");
 		final String bestProvider = mLm.getBestProvider(getCriteria(), true);  
         Location location = mLm.getLastKnownLocation(bestProvider); 
         //notifyListeners(location);
@@ -194,6 +194,7 @@ public class GpsService extends Service {
          * λ����Ϣ�仯ʱ���� 
          */  
         public void onLocationChanged(Location location) {  
+        	
         	if(!mFirstLocation) {
         		mFirstLocation = true;
         		LogUtil.logTimestamp(TAG, "onLocationChanged first.");
