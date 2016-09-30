@@ -94,17 +94,13 @@ public class GpsService extends Service {
         boolean added = mLm.addGpsStatusListener(mGpsStatListener);
         LogUtil.logTimestamp(TAG, "added = " + added);
         
-        // �󶨼�����4������  
-        // ����1���豸����GPS_PROVIDER��NETWORK_PROVIDER����  
-        // ����2��λ����Ϣ�������ڣ���λ����  
-        // ����3��λ�ñ仯��С���룺��λ�þ���仯�����ֵʱ��������λ����Ϣ  
-        // ����4������  
-        // ��ע������2��3��������3��Ϊ0�����Բ���3Ϊ׼������3Ϊ0����ͨ��ʱ������ʱ���£�����Ϊ0������ʱˢ��  
-  
-        // 1�����һ�Σ�����Сλ�Ʊ仯����1�׸���һ�Σ�  
-        // ע�⣺�˴�����׼ȷ�ȷǳ��ͣ��Ƽ���service��������һ��Thread����run��sleep(10000);Ȼ��ִ��handler.sendMessage(),����λ��  
-        mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
+        //reqLocationUpdates();
         //lm.requestLocationUpdates(bestProvider, 1000, 1, locationListener);
+	}
+	
+	boolean reqLocationUpdates = false;
+	private void reqLocationUpdates() {
+		mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
 	}
 	
 	@Override
@@ -231,19 +227,16 @@ public class GpsService extends Service {
         public void onStatusChanged(String provider, int status, Bundle extras) {  
             switch (status) {  
             // GPS״̬Ϊ�ɼ�ʱ  
-            case LocationProvider.AVAILABLE:  
-                Log.i(TAG, "��ǰGPS״̬Ϊ�ɼ�״̬"); 
-                //showToast("��ǰGPS״̬Ϊ�ɼ�״̬");
+            case LocationProvider.AVAILABLE:
+            	LogUtil.log("LocationProvider AVAILABLE");
                 break;  
             // GPS״̬Ϊ��������ʱ  
-            case LocationProvider.OUT_OF_SERVICE:  
-                Log.i(TAG, "��ǰGPS״̬Ϊ��������״̬"); 
-                //showToast("��ǰGPS״̬Ϊ��������״̬"); 
+            case LocationProvider.OUT_OF_SERVICE:
+            	LogUtil.log("LocationProvider  OUT_OF_SERVICE");
                 break;  
             // GPS״̬Ϊ��ͣ����ʱ  
-            case LocationProvider.TEMPORARILY_UNAVAILABLE:  
-                Log.i(TAG, "��ǰGPS״̬Ϊ��ͣ����״̬");   
-                //showToast("��ǰGPS״̬Ϊ��ͣ����״̬"); 
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+            	LogUtil.log("LocationProvider  TEMPORARILY_UNAVAILABLE");
                 break;  
             }  
         }  
@@ -275,37 +268,41 @@ public class GpsService extends Service {
             switch (event) {  
             // ��һ�ζ�λ  
             case GpsStatus.GPS_EVENT_FIRST_FIX:  
-                Log.i(TAG, "��һ�ζ�λ");   
-                //showToast("��һ�ζ�λ"); 
+                LogUtil.logTimestamp(TAG, "gps first fix");
                 break;  
             // ����״̬�ı�  
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                Log.i(TAG, "����״̬�ı�");  
-                //showToast("����״̬�ı�"); 
-                // ��ȡ��ǰ״̬  
-                GpsStatus gpsStatus = mLm.getGpsStatus(null);  
-                // ��ȡ���ǿ����Ĭ�����ֵ  
-                int maxSatellites = gpsStatus.getMaxSatellites();  
-                // ����һ�������������������  
+                //LogUtil.logTimestamp(TAG, "gps satellite status.");
+                GpsStatus gpsStatus = mLm.getGpsStatus(null);
+                int maxSatellites = gpsStatus.getMaxSatellites();
                 Iterator<GpsSatellite> iters = gpsStatus.getSatellites()  
                         .iterator();  
                 int count = 0;  
+                int used = 0;
                 while (iters.hasNext() && count <= maxSatellites) {  
-                    GpsSatellite s = iters.next();  
+                    GpsSatellite s = iters.next();
+                    if(s.usedInFix()) {
+                    	used++;
+                    }
                     count++;  
-                }  
-                System.out.println("��������" + count + "������");   
-                //showToast("��������" + count + "������"); 
+                }
+                if(used > 0) {
+                	LogUtil.log(TAG, "get " + count + " satellites" + ", used = " + used 
+                			+ ", TimeToFirstFix = " + gpsStatus.getTimeToFirstFix());
+                	if(!reqLocationUpdates) {
+                		LogUtil.log("reqLocationUpdates, thread name = " + Thread.currentThread().getName());
+                		reqLocationUpdates = true;
+                		reqLocationUpdates();
+                	}
+                }
                 break;  
             // ��λ����  
             case GpsStatus.GPS_EVENT_STARTED:
-                Log.i(TAG, "��λ����");  
-                //showToast("��λ����"); 
+            	LogUtil.logTimestamp(TAG, "gps started");
                 break;  
             // ��λ����  
-            case GpsStatus.GPS_EVENT_STOPPED:  
-                Log.i(TAG, "��λ����");  
-                //showToast("��λ����"); 
+            case GpsStatus.GPS_EVENT_STOPPED:
+            	LogUtil.logTimestamp(TAG, "gps stopped");
                 break;  
             }  
         };  
