@@ -7,7 +7,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
 public class LogUtil {
+	private static final String TAG = "LogUtil";
+	
 	private static final String LOG_PREFIX = "log";
 	private static final String LOG_EXT = ".txt";
 	private static StringBuffer sBuffer = new StringBuffer();
@@ -16,19 +23,66 @@ public class LogUtil {
 	private static long sLogTime = System.currentTimeMillis();
 	private static long LOG_INTERVAL = 1000 * 10;
 	
+	private volatile static boolean flushStarted = false;
+	private static final int MSG_FLUSH = 0;
+	private static final long DELAY_FLUSH = 60 * 1000;
+	private static Handler sLog = new Handler(Looper.getMainLooper()) {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case MSG_FLUSH:
+				logTimestamp(true, TAG, "flush log...");
+				sLog.removeMessages(MSG_FLUSH);
+				sLog.sendEmptyMessageDelayed(MSG_FLUSH, DELAY_FLUSH);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	
+	public static void logTimestamp(final boolean flush, final String TAG, final String msg) {
+		Date date = new Date();
+		log(flush, TAG + " at " + date.toLocaleString(), msg);
+	}
+	
 	public static void logTimestamp(final String TAG, final String msg) {
 		Date date = new Date();
 		log(TAG + " at " + date.toLocaleString(), msg);
+	}
+	
+	public static void log(final boolean flush, final String TAG, final String msg) {
+		log(flush, TAG + ":: " + msg);
 	}
 	
 	public static void log(final String TAG, final String msg) {
 		log(TAG + ":: " + msg);
 	}
 	
+
 	public static void log(final String msg) {
+		log(false, msg);
+	}
+	
+	public static void toast(Context context, String msg) {
+		if(Constant.DEBUG) {
+			Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	public static void log(final boolean flush, final String msg) {
 		sBuffer.append(msg + "\n");
 		long cur = System.currentTimeMillis();
-		if(BUFF_LEN < sBuffer.length()
+		// release case
+		if(!Constant.DEBUG
+				&& !flushStarted) {
+			flushStarted = true;
+			sLog.sendEmptyMessageDelayed(MSG_FLUSH, DELAY_FLUSH);
+		}
+		
+		if(Constant.DEBUG
+				|| flush
+				|| BUFF_LEN < sBuffer.length()
 				|| LOG_INTERVAL < (cur - sLogTime)) {
 			Date date = new Date();
 			String path = Utils.getExportFolder() 

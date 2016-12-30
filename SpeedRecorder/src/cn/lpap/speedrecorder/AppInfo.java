@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class AppInfo extends BaseActivity {
+	private static final String TAG = "AppInfo";
     private Button mQuerySpeeds = null;
     private Button mQuerySpeedsHour = null;
     private Button mSelectTime = null;
@@ -27,6 +28,7 @@ public class AppInfo extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		LogUtil.log(true, TAG, "onCreate enter.");
 		setContentView(R.layout.app_info);
 		
 		mQuerySpeeds = (Button)findViewById(R.id.query_speeds);

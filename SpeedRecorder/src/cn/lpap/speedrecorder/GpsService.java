@@ -94,30 +94,36 @@ public class GpsService extends Service {
         boolean added = mLm.addGpsStatusListener(mGpsStatListener);
         LogUtil.logTimestamp(TAG, "added = " + added);
         
-        //reqLocationUpdates();
+        reqLastKnownLocation();
         //lm.requestLocationUpdates(bestProvider, 1000, 1, locationListener);
 	}
 	
 	boolean reqLocationUpdates = false;
 	private void reqLocationUpdates() {
+		LogUtil.logTimestamp(TAG, "reqLocationUpdates enter.");
 		mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
 	}
-	
+	Notification notification = null;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		 Notification notification = new Notification(R.drawable.ic_launcher,
-				 getString(R.string.app_name), System.currentTimeMillis());
-		
-		 PendingIntent pendingintent = PendingIntent.getActivity(this, 
-				 0,
-				 new Intent(this, MainActivity.class), 
-				 0);
-		 notification.setLatestEventInfo(this, 
-				 "GpsService", 
-				 "Speed recorder contextText",
-				 pendingintent);
-		 startForeground(0x111, notification);
+		if(null == notification) {
+			 notification = new Notification(R.drawable.ic_launcher,
+					 getString(R.string.app_name), System.currentTimeMillis());
+			
+			 PendingIntent pendingintent = PendingIntent.getActivity(this, 
+					 0,
+					 new Intent(this, MainActivity.class), 
+					 0);
+			 notification.setLatestEventInfo(this, 
+					 "GpsService", 
+					 "Speed recorder contextText",
+					 pendingintent);
+			 startForeground(0x111, notification);
+		}
+		if(!mFirstLocation) {
+	        reqLocationUpdates();
+		}
 		 return super.onStartCommand(intent, flags, startId);
 	}
 	
@@ -125,15 +131,22 @@ public class GpsService extends Service {
 		LogUtil.logTimestamp(TAG, "reqLastKnownLocation enter.");
 		final String bestProvider = mLm.getBestProvider(getCriteria(), true);  
         Location location = mLm.getLastKnownLocation(bestProvider); 
-        //notifyListeners(location);
+        notifyListeners(location);
+        LogUtil.log(TAG, "location = " + location + ", bestProvider = " + bestProvider);
 	}
 	
 	private void notifyListeners(Location location) {
 		Iterator<GpsServiceListener> listeners = mListeners.iterator();
+		//LogUtil.log(TAG, "notifyListeners start");
 		while(listeners.hasNext()) {
 			GpsServiceListener l = listeners.next();
+			//if(1 <mListeners.size()) {
+			if(false) {
+				LogUtil.log(TAG, "GpsServiceListener = " + l);
+			}
 			l.onLocationChanged(location);
 		}
+		//LogUtil.log(TAG, "notifyListeners end");
 	}
 	
 	private void resetSpeed(final float oldSpeed) {
@@ -145,10 +158,12 @@ public class GpsService extends Service {
 	}
 	
 	public void addListener(final GpsServiceListener listener) {
+		LogUtil.log(TAG, "addListener enter. listener = " + listener);
 		mListeners.add(listener);
 	}
 	
 	public void removeListener(final GpsServiceListener listener) {
+		LogUtil.log(TAG, "removeListener enter. listener = " + listener);
 		mListeners.remove(listener);
 	}
 	
@@ -188,10 +203,10 @@ public class GpsService extends Service {
     private LocationListener mLocationListener = new LocationListener() {  
   
         /** 
-         * λ����Ϣ�仯ʱ���� 
+         * ensure device is not in power save mode 
          */  
         public void onLocationChanged(Location location) {  
-        	
+        	// not power save mode???
         	if(!mFirstLocation) {
         		mFirstLocation = true;
         		LogUtil.logTimestamp(TAG, "onLocationChanged first.");
@@ -215,10 +230,14 @@ public class GpsService extends Service {
             		String.valueOf(speedManual),
             		String.valueOf(location.getLongitude()),
             		String.valueOf(location.getLatitude()));
-            Log.i(TAG, "ʱ�䣺" + location.getTime());  
+            /*Log.i(TAG, "ʱ�䣺" + location.getTime());  
             Log.i(TAG, "���ȣ�" + location.getLongitude());  
             Log.i(TAG, "γ�ȣ�" + location.getLatitude());  
-            Log.i(TAG, "���Σ�" + location.getAltitude());  
+            Log.i(TAG, "���Σ�" + location.getAltitude()); */ 
+            LogUtil.log(TAG, "time = " + location.getTime());  
+            LogUtil.log(TAG, "long = " + location.getLongitude());  
+            LogUtil.log(TAG, "lat = " + location.getLatitude());  
+            LogUtil.log(TAG, "altitude" + location.getAltitude());
         }  
   
         /** 
@@ -289,7 +308,8 @@ public class GpsService extends Service {
                 if(used > 0) {
                 	LogUtil.log(TAG, "get " + count + " satellites" + ", used = " + used 
                 			+ ", TimeToFirstFix = " + gpsStatus.getTimeToFirstFix());
-                	if(!reqLocationUpdates) {
+                	//if(!reqLocationUpdates) {
+                	if(false) {
                 		/*
                 		 *  TODO: if not requestLocationUpdates, will not receive GPS_EVENT_SATELLITE_STATUS
                 		 *  change sequence to invoke following sentences.
@@ -302,6 +322,7 @@ public class GpsService extends Service {
                 break;  
             // ��λ����  
             case GpsStatus.GPS_EVENT_STARTED:
+            	// gps works
             	LogUtil.logTimestamp(TAG, "gps started");
                 break;  
             // ��λ����  

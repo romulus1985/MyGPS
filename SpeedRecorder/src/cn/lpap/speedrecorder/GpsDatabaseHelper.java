@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class GpsDatabaseHelper extends SQLiteOpenHelper {
+	private static final String TAG = "GpsDatabaseHelper";
     public static final String DB_NAME = "Gps"; //数据库名称  
     
     private static final int version = 1; //数据库版本  
@@ -129,7 +130,7 @@ public class GpsDatabaseHelper extends SQLiteOpenHelper {
         cv.put(POS_LONG, longitude);  
         cv.put(POS_LAN, latitude);
         long insertRowId = getWritableDatabase().insert(TABLE_NAME, null, cv);  
-        LogUtil.log("insert: timeDesc = " + timeDesc + ", speedDesc = " + speedDesc + ", insertRowId = " + insertRowId);
+        LogUtil.log(TAG, "insert: timeDesc = " + timeDesc + ", speedDesc = " + speedDesc + ", insertRowId = " + insertRowId);
         return insertRowId;
     } 
 }

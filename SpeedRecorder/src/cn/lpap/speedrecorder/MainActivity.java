@@ -22,6 +22,7 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			// TODO Auto-generated method stub
+			LogUtil.log(TAG, "onServiceDisconnected enter.");
 			gpsService.removeListener(MainActivity.this);
 			gpsService = null;
 		}
@@ -54,6 +56,7 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			// TODO Auto-generated method stub
+			LogUtil.log(TAG, "onServiceConnected enter.");
 			GpsService.MyBinder binder = (GpsService.MyBinder)service;
 			gpsService = binder.getService();
 			gpsService.addListener(MainActivity.this);
@@ -64,6 +67,8 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		long elapsed = SystemClock.elapsedRealtime() / 1000;
+		LogUtil.log(true, TAG, "onCreate enter. elapsed = " + elapsed);
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.main);
@@ -195,7 +200,11 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy(); 
+		LogUtil.log(TAG, "onDestroy enter.");
 		unbindService(sc);
+		if(null != gpsService) {
+			gpsService.removeListener(this);
+		}
 	}
 	
 	private void showToast(final String msg) {
