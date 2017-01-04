@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 import cn.lpap.speedrecorder.R;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +24,7 @@ public class AppInfo extends BaseActivity {
     private Button mQuerySpeedsHour = null;
     private Button mSelectTime = null;
     private Button mExportDB = null;
+    private Button mExit = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,17 @@ public class AppInfo extends BaseActivity {
 				final String newPath = Utils.getExportFolder()
 						+ File.separator + GpsDatabaseHelper.DB_NAME + Utils.getUniqueName() + ".db";
 				copyFile(oldPath, newPath);
+			}
+		});
+		mExit = (Button)findViewById(R.id.exit);
+		mExit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				stopService(new Intent(AppInfo.this, GpsService.class));
+				setResult(Activity.RESULT_CANCELED);
+				finish();
 			}
 		});
 	}

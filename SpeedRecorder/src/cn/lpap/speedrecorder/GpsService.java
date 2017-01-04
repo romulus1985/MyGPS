@@ -43,7 +43,8 @@ public class GpsService extends Service {
 
 	private MyBinder mBinder;	
 	private LocationManager mLm = null;
-	private static final long MIN_TIME = 1000;
+	private static final long MIN_TIME = 10 * 1000;
+	private static final float MIN_DISTANCE = 1.0f;
 	private Set<GpsServiceListener> mListeners = new HashSet<GpsServiceListener>();
 	private GpsDatabaseHelper mDb = null;
     private float mSpeed = 0;
@@ -101,8 +102,10 @@ public class GpsService extends Service {
 	boolean reqLocationUpdates = false;
 	private void reqLocationUpdates() {
 		LogUtil.logTimestamp(TAG, "reqLocationUpdates enter.");
-		mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 1, mLocationListener);
+		mLm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, mLocationListener);
 	}
+	
+	private final int notifyId = 0x111;
 	Notification notification = null;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -116,10 +119,10 @@ public class GpsService extends Service {
 					 new Intent(this, MainActivity.class), 
 					 0);
 			 notification.setLatestEventInfo(this, 
-					 "GpsService", 
-					 "Speed recorder contextText",
+					 getString(R.string.notification_title), 
+					 getString(R.string.notification_content),
 					 pendingintent);
-			 startForeground(0x111, notification);
+			 startForeground(notifyId, notification);
 		}
 		if(!mFirstLocation) {
 	        reqLocationUpdates();
@@ -342,6 +345,7 @@ public class GpsService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+		LogUtil.log(TAG, "onDestroy enter.");
 		super.onDestroy();
 		mLm.removeUpdates(mLocationListener); 
 		stopForeground(true);

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import cn.lpap.speedrecorder.R;
 import cn.lpap.speedrecorder.GpsService.GpsServiceListener;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -94,6 +95,7 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 		bindService(service, sc, Context.BIND_AUTO_CREATE);
 	}
 	
+	private static final int REQ_APP_INFO = 1;
 	private void initView() {
 		mSpeedTv = (TextView)findViewById(R.id.speed);
 		initSpeed();
@@ -106,9 +108,20 @@ public class MainActivity extends BaseActivity implements GpsServiceListener {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent appInfo = new Intent(MainActivity.this, AppInfo.class);
-				startActivity(appInfo);
+				//startActivity(appInfo);
+				startActivityForResult(appInfo, REQ_APP_INFO);
 			}
 		});
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(REQ_APP_INFO == requestCode
+				&& Activity.RESULT_CANCELED == resultCode) {
+			finish();
+		}
 	}
     
     private String formatTime(long time) {
